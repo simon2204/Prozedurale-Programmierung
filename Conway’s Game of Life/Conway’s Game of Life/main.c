@@ -23,8 +23,8 @@ void delete_bit(unsigned char generation[], short pos);
 void delete_bit_for_field(short row, short column);
 short neighbours_count(unsigned char generation[], short pos);
 
-#define ALL_ROWS 5
-#define ALL_COLS 6
+#define ALL_ROWS 10
+#define ALL_COLS 10
 #define ALL_FIELDS (ALL_ROWS * ALL_COLS)
 #define ALL_FIELDS_IN_BYTE (ALL_FIELDS / 8)
 #define SEGMENTS (ALL_FIELDS_IN_BYTE + 1)
@@ -39,8 +39,33 @@ unsigned char generation[SEGMENTS];
 
 int main(int argc, const char * argv[]) {
     
-    set_generation_from_string("111000001000010111000100000010");
-    game_of_life(5000);
+    char glider[] =
+    "0000000100"
+    "0000000101"
+    "0010000110"
+    "0010100000"
+    "0011000000"
+    "0000000000"
+    "0000000000"
+    "0000000000"
+    "0000000000"
+    "0000000000";
+    
+    char sonne[] =
+    "0001100000"
+    "0010010000"
+    "0100001000"
+    "1000000100"
+    "1000000100"
+    "0100001000"
+    "0010010000"
+    "0001100000"
+    "0000000000"
+    "0000000000";
+    
+    set_generation_from_string(sonne);
+    print_generation();
+    game_of_life(500000);
     
     return 0;
 }
@@ -53,6 +78,7 @@ void game_of_life(int max_generations)
     for (i = 0; i < max_generations && isMutating; i++)
     {
         isMutating = set_next_generation();
+        printf("\e[1;1H\e[2J");
         printf("%d\n", i);
         print_generation();
         for(j = 0; j < 100000000; j++);
@@ -62,6 +88,7 @@ void game_of_life(int max_generations)
 bool set_next_generation()
 {
     unsigned char generation_copy[SEGMENTS];
+    bool something_changed = false;
     short n_count;
     int i;
     int j;
@@ -80,7 +107,7 @@ bool set_next_generation()
             if (n_count < 2 || n_count > 3)
             {
                 delete_bit(generation, i);
-                return true;
+                something_changed = true;
             }
         }
         else
@@ -88,12 +115,12 @@ bool set_next_generation()
             if (n_count == 3)
             {
                 set_bit(generation, i);
-                return true;
+                something_changed = true;
             }
         }
     }
     
-    return false;
+    return something_changed;
 }
 
 void set_generation_from_string(char string[ALL_FIELDS])
@@ -116,7 +143,8 @@ void set_generation_from_string(char string[ALL_FIELDS])
 }
 
 void get_generation_as_string(char string[ALL_FIELDS]) {
-    for (int i = 0; i < ALL_FIELDS; i++)
+    int i;
+    for (i = 0; i < ALL_FIELDS; i++)
     {
         printf("%c", is_set(generation, i) ? '1' : '0');
     }
@@ -125,7 +153,10 @@ void get_generation_as_string(char string[ALL_FIELDS]) {
 
 void delete_bit(unsigned char generation[SEGMENTS], short pos)
 {
-    if (pos < 0 || pos >= ALL_FIELDS) { return; }
+    if (pos < 0 || pos >= ALL_FIELDS)
+    {
+        return;
+    }
     short segment = pos / 8;
     short element = pos % 8;
     generation[segment] &= ~(0x80u >> element);
@@ -133,7 +164,10 @@ void delete_bit(unsigned char generation[SEGMENTS], short pos)
 
 void set_bit(unsigned char generation[SEGMENTS], short pos)
 {
-    if (pos < 0 || pos >= ALL_FIELDS) { return; }
+    if (pos < 0 || pos >= ALL_FIELDS)
+    {
+        return;
+    }
     short segment = pos / 8;
     short element = pos % 8;
     generation[segment] |= (0x80u >> element);
