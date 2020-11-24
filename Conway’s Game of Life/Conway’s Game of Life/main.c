@@ -6,7 +6,9 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 void print_generation(void);
 void set_generation_from_string(char string[]);
@@ -36,6 +38,7 @@ short neighbours_count(unsigned char generation[], short pos);
 #define ZERO 0
 
 unsigned char generation[SEGMENTS];
+unsigned char generation_copy[SEGMENTS];
 
 int main(int argc, const char * argv[]) {
     
@@ -73,22 +76,20 @@ int main(int argc, const char * argv[]) {
 void game_of_life(int max_generations)
 {
     int i;
-    int j;
     bool isMutating = true;
     for (i = 0; i < max_generations && isMutating; i++)
     {
         isMutating = set_next_generation();
-        printf("\e[1;1H\e[2J");
+        system("clear");
         printf("%d\n", i);
         print_generation();
-        for(j = 0; j < 100000000; j++);
+        usleep(1000000 / 3);
     }
 }
 
 bool set_next_generation()
 {
-    unsigned char generation_copy[SEGMENTS];
-    bool something_changed = false;
+    bool did_mutate = false;
     short n_count;
     int i;
     int j;
@@ -107,7 +108,7 @@ bool set_next_generation()
             if (n_count < 2 || n_count > 3)
             {
                 delete_bit(generation, i);
-                something_changed = true;
+                did_mutate = true;
             }
         }
         else
@@ -115,12 +116,12 @@ bool set_next_generation()
             if (n_count == 3)
             {
                 set_bit(generation, i);
-                something_changed = true;
+                did_mutate = true;
             }
         }
     }
     
-    return something_changed;
+    return did_mutate;
 }
 
 void set_generation_from_string(char string[ALL_FIELDS])
@@ -220,7 +221,9 @@ char char_in_field(short row, short column)
 
 void print_generation()
 {
-    for (int j = 0; j < ALL_COLS; j++)
+    int i;
+    int j;
+    for (i = 0; i < ALL_COLS; i++)
     {
         printf("+---");
     }
@@ -230,15 +233,15 @@ void print_generation()
         printf("+\n");
     }
     
-    for (int i = 0; i < ALL_ROWS; i++)
+    for (i = 0; i < ALL_ROWS; i++)
     {
-        for (int j = 0; j < ALL_COLS; j++)
+        for (j = 0; j < ALL_COLS; j++)
         {
             printf("| %c ", char_in_field(i, j));
         }
         printf("|\n");
         
-        for (int j = 0; j < ALL_COLS; j++)
+        for (j = 0; j < ALL_COLS; j++)
         {
             printf("+---");
         }
