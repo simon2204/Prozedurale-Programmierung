@@ -51,17 +51,17 @@ unsigned char generation_copy[SEGMENTS];
 
 int main(int argc, const char * argv[]) {
     
-//    char glider[] =
-//    "0000000100"
-//    "0000000101"
-//    "0010000110"
-//    "0010100000"
-//    "0011000000"
-//    "0000000000"
-//    "0000000000"
-//    "0000000000"
-//    "0000000000"
-//    "0000000000";
+    char glider[] =
+    "0000000100"
+    "0000000101"
+    "0010000110"
+    "0010100000"
+    "0011000000"
+    "0000000000"
+    "0000000000"
+    "0000000000"
+    "0000000000"
+    "0000000000";
     
     char sonne[] =
     "0001100000"
@@ -75,7 +75,7 @@ int main(int argc, const char * argv[]) {
     "0000000000"
     "0000000000";
     
-    set_generation_from_string(sonne);
+    set_generation_from_string(glider);
     print_generation();
     game_of_life(500000);
     
@@ -141,7 +141,8 @@ void set_generation_from_string(char string[ALL_CELLS])
     char charakter = string[i];
     while (charakter != '\0')
     {
-        if (charakter == '0') {
+        if (charakter == '0')
+        {
             delete_bit(i, generation);
         }
         else
