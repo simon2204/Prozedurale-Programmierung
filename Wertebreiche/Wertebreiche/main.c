@@ -42,15 +42,15 @@ int main(int argc, const char * argv[]) {
     
     int int_min = (0x01 << 31);
     int int_max = ~int_min;
-    printf("Signed short Wertebereich von %d bis %d\n", int_min, int_max);
+    printf("Signed int Wertebereich von %d bis %d\n", int_min, int_max);
     unsigned int uint_max = ~(0x00);
-    printf("Unsigned short Wertebereich von %u bis %u\n\n", 0, uint_max);
+    printf("Unsigned int Wertebereich von %u bis %u\n\n", 0, uint_max);
     
     long long_min = (0x01L << 63);
     long long_max = ~long_min;
-    printf("Signed short Wertebereich von %ld bis %ld\n", long_min, long_max);
-    unsigned long ulong_max = ~(0x00LU);
-    printf("Unsigned short Wertebereich von %u bis %lu\n\n", 0, ulong_max);
+    printf("Signed long Wertebereich von %ld bis %ld\n", long_min, long_max);
+    unsigned long ulong_max = ~(0x00UL);
+    printf("Unsigned long Wertebereich von %u bis %lu\n\n", 0, ulong_max);
     
     
     unsigned char pressed_buttons;
