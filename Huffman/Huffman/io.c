@@ -33,25 +33,19 @@ static unsigned int out_buffer_size;
 extern void init_in(char text[])
 {
     lese_position = 0;
-    in_buffer_size = 0;
     unsigned int segment = 0;
     char buchstabe = text[0];
-
     while (buchstabe != '\0') {
         in_buffer[segment] = buchstabe;
         in_buffer_size += BYTE_SIZE;
         segment += 1;
         buchstabe = text[segment];
     }
+    in_buffer_size = segment * BYTE_SIZE;
 }
 
 extern void init_out()
 {
-    unsigned int i;
-    for (i = 0; i < BUF_SIZE; i++)
-    {
-        out_buffer[i] = 0;
-    }
     schreib_position = 0;
     out_buffer_size = 0;
 }

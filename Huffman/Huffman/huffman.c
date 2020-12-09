@@ -12,11 +12,9 @@ extern void test_rd_chars_wr_bits(char in[], char out[])
     init_in(in);
     init_out();
     
-    unsigned char next_byte;
     while (has_next_char()) {
-        next_byte = read_char();
         
-        if (next_byte < 'a')
+        if (read_char() < 'a')
         {
             write_bit(ONE);
         }
@@ -34,11 +32,9 @@ extern void test_rd_bits_wr_chars(char in[], char out[])
     init_in(in);
     init_out();
     
-    unsigned char next_bit;
     while (has_next_bit()) {
-        next_bit = read_bit();
         
-        if (next_bit == ONE)
+        if (read_bit() == ONE)
         {
             write_char('1');
         }

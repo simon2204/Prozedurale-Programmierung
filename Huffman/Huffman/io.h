@@ -8,8 +8,8 @@
 #ifndef io_h
 #define io_h
 
+#include <stdbool.h>
 #include "huffman_common.h"
-#include <stdbool.h> 
 
 extern void init_in(char text[]);
 extern void init_out(void);
