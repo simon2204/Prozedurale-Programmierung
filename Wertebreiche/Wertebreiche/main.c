@@ -13,45 +13,45 @@ extern void dispatch(unsigned char pressed_buttons);
 
 int main(int argc, const char * argv[]) {
     
-    printf("a)\n");
-    printf("Signed char Wertebereich von %d bis %d\n", CHAR_MIN, CHAR_MAX);
-    printf("Unsigned char Wertebereich von %u bis %u\n\n", 0, UCHAR_MAX);
-    
-    printf("Signed short Wertebereich von %d bis %d\n", SHRT_MIN, SHRT_MAX);
-    printf("Unsigned short Wertebereich von %u bis %u\n\n", 0, USHRT_MAX);
-    
-    printf("Signed int Wertebereich von %d bis %d\n", INT_MIN, INT_MAX);
-    printf("Unsigned int Wertebereich von %u bis %u\n\n", 0, UINT_MAX);
-    
-    printf("Signed long Wertebereich von %ld bis %ld\n", LONG_MIN, LONG_MAX);
-    printf("Unsigned long Wertebereich von %d bis %lu\n\n", 0, ULONG_MAX);
-    
-    printf("b)\n");
-    
-    char char_min = (char) (0x01 << 7);
-    char char_max = ~char_min;
-    printf("Signed char Wertebereich von %d bis %d\n", char_min, char_max);
-    unsigned char uchar_max = ~(0x00);
-    printf("Unsigned char Wertebereich von %u bis %u\n\n", 0, uchar_max);
-    
-    short short_min = (short) (0x01 << 15);
-    short short_max = ~short_min;
-    printf("Signed short Wertebereich von %d bis %d\n", short_min, short_max);
-    unsigned short ushort_max = ~(0x00);
-    printf("Unsigned short Wertebereich von %u bis %u\n\n", 0, ushort_max);
-    
-    int int_min = (0x01 << 31);
-    int int_max = ~int_min;
-    printf("Signed int Wertebereich von %d bis %d\n", int_min, int_max);
-    unsigned int uint_max = ~(0x00);
-    printf("Unsigned int Wertebereich von %u bis %u\n\n", 0, uint_max);
-    
-    long long_min = (0x01L << 63);
-    long long_max = ~long_min;
-    printf("Signed long Wertebereich von %ld bis %ld\n", long_min, long_max);
-    unsigned long ulong_max = ~(0x00UL);
-    printf("Unsigned long Wertebereich von %u bis %lu\n\n", 0, ulong_max);
-    
+//    printf("a)\n");
+//    printf("Signed char Wertebereich von %d bis %d\n", CHAR_MIN, CHAR_MAX);
+//    printf("Unsigned char Wertebereich von %u bis %u\n\n", 0, UCHAR_MAX);
+//
+//    printf("Signed short Wertebereich von %d bis %d\n", SHRT_MIN, SHRT_MAX);
+//    printf("Unsigned short Wertebereich von %u bis %u\n\n", 0, USHRT_MAX);
+//
+//    printf("Signed int Wertebereich von %d bis %d\n", INT_MIN, INT_MAX);
+//    printf("Unsigned int Wertebereich von %u bis %u\n\n", 0, UINT_MAX);
+//
+//    printf("Signed long Wertebereich von %ld bis %ld\n", LONG_MIN, LONG_MAX);
+//    printf("Unsigned long Wertebereich von %d bis %lu\n\n", 0, ULONG_MAX);
+//
+//    printf("b)\n");
+//
+//    char char_min = (char) (0x01 << 7);
+//    char char_max = ~char_min;
+//    printf("Signed char Wertebereich von %d bis %d\n", char_min, char_max);
+//    unsigned char uchar_max = ~(0x00);
+//    printf("Unsigned char Wertebereich von %u bis %u\n\n", 0, uchar_max);
+//
+//    short short_min = (short) (0x01 << 15);
+//    short short_max = ~short_min;
+//    printf("Signed short Wertebereich von %d bis %d\n", short_min, short_max);
+//    unsigned short ushort_max = ~(0x00);
+//    printf("Unsigned short Wertebereich von %u bis %u\n\n", 0, ushort_max);
+//
+//    int int_min = (0x01 << 31);
+//    int int_max = ~int_min;
+//    printf("Signed int Wertebereich von %d bis %d\n", int_min, int_max);
+//    unsigned int uint_max = ~(0x00);
+//    printf("Unsigned int Wertebereich von %u bis %u\n\n", 0, uint_max);
+//
+//    long long_min = (0x01L << 63);
+//    long long_max = ~long_min;
+//    printf("Signed long Wertebereich von %ld bis %ld\n", long_min, long_max);
+//    unsigned long ulong_max = ~(0x00UL);
+//    printf("Unsigned long Wertebereich von %u bis %lu\n\n", 0, ulong_max);
+//
     
     unsigned char pressed_buttons;
 

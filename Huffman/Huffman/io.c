@@ -37,7 +37,6 @@ extern void init_in(char text[])
     char buchstabe = text[0];
     while (buchstabe != '\0') {
         in_buffer[segment] = buchstabe;
-        in_buffer_size += BYTE_SIZE;
         segment += 1;
         buchstabe = text[segment];
     }
@@ -85,16 +84,16 @@ extern bool has_next_bit()
     return lese_position < in_buffer_size;
 }
 
-extern BIT read_bit()
+extern enum BIT read_bit()
 {
     unsigned int segment = lese_position / BYTE_SIZE;
     unsigned int pos = lese_position % BYTE_SIZE;
-    BIT next_bit = GET_BIT(in_buffer[segment], pos);
+    enum BIT next_bit = GET_BIT(in_buffer[segment], pos);
     lese_position++;
     return next_bit;
 }
 
-extern void write_bit(BIT c)
+extern void write_bit(enum BIT c)
 {
     unsigned int segment = schreib_position / BYTE_SIZE;
     unsigned int pos = schreib_position % BYTE_SIZE;

@@ -12,7 +12,8 @@ extern void test_rd_chars_wr_bits(char in[], char out[])
     init_in(in);
     init_out();
     
-    while (has_next_char()) {
+    while (has_next_char())
+    {
         
         if (read_char() < 'a')
         {
@@ -32,7 +33,8 @@ extern void test_rd_bits_wr_chars(char in[], char out[])
     init_in(in);
     init_out();
     
-    while (has_next_bit()) {
+    while (has_next_bit())
+    {
         
         if (read_bit() == ONE)
         {

@@ -8,33 +8,34 @@
 #ifndef huffman_common_h
 #define huffman_common_h
 
-typedef enum: int {
-    ZERO = 0,
-    ONE = 1
-} BIT;
+enum BIT {
+    ZERO,
+    ONE
+};
 
-
+#ifdef DEBUG
 /**
  * Debug-Ausgabe von Ausdrücken, die eine ganze Zahl liefern
  */
-#define DPRINT(P) printf(#P "= %d\n", P)
+#define DPRINT(P) printf(#P "= %d\n", P);
 
 /**
  * Debug-Ausgabe von Ausdrücken, die eine Zeichenkette liefern
  */
-#define SPRINT(P) printf(#P "= \"%s\"\n", P)
+#define SPRINT(P) printf(#P "= \"%s\"\n", P);
 
 /**
  * Debug-Ausgabe von Ausdrücken, die ein Zeichen liefern
  */
-#define CPRINT(P) printf(#P "= %c\n", P)
+#define CPRINT(P) printf(#P "= %c\n", P);
 
 /**
  * Debug-Ausgabe von Ausdrücken, die eine ganze Zahl liefern
  * (hexadezimale Ausgabe)
  */
-#define XPRINT(P) printf(#P "= %x\n", P)
+#define XPRINT(P) printf(#P "= %x\n", P);
 
+#endif /* DEBUG */
 #endif /* huffman_common_h */
 
 
