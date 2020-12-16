@@ -8,10 +8,11 @@
 #ifndef huffman_common_h
 #define huffman_common_h
 
-enum BIT {
+/// Repräsentiert die beiden Bitzustände 0 und 1.
+typedef enum {
     ZERO,
     ONE
-};
+} BIT;
 
 #ifdef DEBUG
 /**

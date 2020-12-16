@@ -41,10 +41,10 @@ extern bool has_next_bit(void);
 
 /// Liefert mit jedem Aufruf das nächste Bit aus dem Eingabepuffer.
 /// @return liefert das nächste Bit.
-extern enum BIT read_bit(void);
+extern BIT read_bit(void);
 
 /// Schreibt den Wert von 'c' an die nächste freie Position in den Ausgabepuffer.
 /// @param c - Das Bit, welches an die nächste freie Position des Ausgabepuffers geschrieben werden soll.
-extern void write_bit(enum BIT c);
+extern void write_bit(BIT c);
 
 #endif /* io_h */

@@ -11,8 +11,12 @@
 
 #define BUF_SIZE 4096
 
+/// Gibt das Bit an der Position 'POS' im übergebenen 'BYTE' zurück.
+/// Liefert ONE, wenn das Bit an der entsprechenden Stelle gesetzt ist und ZERO, wenn es nicht gesetzt ist.
 #define GET_BIT(BYTE, POS) ((0x80u >> POS & BYTE) > 0 ? ONE : ZERO)
 
+/// Setzt, wenn 'BIT' ONE oder löscht wenn 'BIT' ZERO ist, ein Bit an Position 'POS' in dem übergebenen 'BYTE'
+/// und gibt ein neues BYTE mit dem gesetzten bzw. geöschten Bit zurück.
 #define PUT_BIT(BYTE, BIT, POS) (BIT == ZERO ? ~(0x80u >> POS) & BYTE : (0x80u >> POS) | BYTE)
 
 /// Eingabe Buffer
@@ -43,7 +47,7 @@ extern void init_in(char text[])
     in_buffer_size = segment * BYTE_SIZE;
 }
 
-extern void init_out()
+extern void init_out(void)
 {
     schreib_position = 0;
     out_buffer_size = 0;
@@ -56,14 +60,15 @@ extern void get_out_buffer(char text[])
     {
         text[i] = out_buffer[i];
     }
+    text[i] = '\0';
 }
 
-extern bool has_next_char()
+extern bool has_next_char(void)
 {
     return lese_position < in_buffer_size;
 }
 
-extern unsigned char read_char()
+extern unsigned char read_char(void)
 {
     unsigned int segment = lese_position / BYTE_SIZE;
     unsigned char next_char = in_buffer[segment];
@@ -79,21 +84,21 @@ extern void write_char(unsigned char c)
     out_buffer_size += BYTE_SIZE;
 }
 
-extern bool has_next_bit()
+extern bool has_next_bit(void)
 {
     return lese_position < in_buffer_size;
 }
 
-extern enum BIT read_bit()
+extern BIT read_bit(void)
 {
     unsigned int segment = lese_position / BYTE_SIZE;
     unsigned int pos = lese_position % BYTE_SIZE;
-    enum BIT next_bit = GET_BIT(in_buffer[segment], pos);
+    BIT next_bit = GET_BIT(in_buffer[segment], pos);
     lese_position++;
     return next_bit;
 }
 
-extern void write_bit(enum BIT c)
+extern void write_bit(BIT c)
 {
     unsigned int segment = schreib_position / BYTE_SIZE;
     unsigned int pos = schreib_position % BYTE_SIZE;
