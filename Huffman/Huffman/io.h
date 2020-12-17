@@ -5,6 +5,15 @@
 //  Created by Simon Schöpke on 03.12.20.
 //
 
+/**
+ * @file
+ *
+ * In diesem Modul werden die Funktionen zum byte- sowie bitweisen Lesen und Schreiben definiert.
+ *
+ * @author Simon Schöke
+ * @date   2020-12-03
+ */
+
 #ifndef io_h
 #define io_h
 

@@ -15,6 +15,7 @@ typedef enum {
 } BIT;
 
 #ifdef DEBUG
+#include <stdio.h>
 /**
  * Debug-Ausgabe von Ausdrücken, die eine ganze Zahl liefern
  */

@@ -127,3 +127,28 @@ void initUsingPointer(void)
         p++;
     }
 }
+
+1   void xxx(void)
+2   {
+3       char *lectures[] = {"SPIN", "TENI", "THI", "ADS", "SWT"};
+4
+5       char *p;
+6       char **pp;
+7
+8       p = lectures[1];
+9       pp = lectures;
+10
+11      printf("1. %s\n", p);                 //Prints "1. TENI"
+12
+13      printf("2. %s\n", p + 2);             //Prints "2. NI"
+14
+15      printf("3. %s\n", *(pp + 2));         //Prints "3. THI"
+16
+17      printf("4. %s\n", *pp + 2);           //Prints "4. IN"
+18
+19      printf("5. %s\n", *(pp + 1) + 2);     //Prints "5. NI"
+20
+21      printf("6. %s\n", *(lectures + 2));   //Prints "6. THI"
+22
+23      printf("7. %s\n", (lectures[2] + 2)); //Prints "7. I"
+24   }
