@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F44B02192579777A00B44DC0 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = F44B02182579777A00B44DC0 /* main.c */; };
-		F44B0222257977EF00B44DC0 /* huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = F44B0221257977EF00B44DC0 /* huffman.c */; };
-		F44B022B25797AF600B44DC0 /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = F44B022A25797AF600B44DC0 /* io.c */; };
-		F4523E7125AA548200723C58 /* argument_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = F4523E7025AA548200723C58 /* argument_parser.c */; };
+		F48F488325A74063002E8FDE /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = F48F488225A74063002E8FDE /* main.c */; };
+		F48F488D25A74085002E8FDE /* compare.c in Sources */ = {isa = PBXBuildFile; fileRef = F48F488A25A74085002E8FDE /* compare.c */; };
+		F48F488E25A74085002E8FDE /* bubblesort.c in Sources */ = {isa = PBXBuildFile; fileRef = F48F488B25A74085002E8FDE /* bubblesort.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F44B02132579777A00B44DC0 /* CopyFiles */ = {
+		F48F487D25A74063002E8FDE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -26,19 +25,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F44B02152579777A00B44DC0 /* Huffman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Huffman; sourceTree = BUILT_PRODUCTS_DIR; };
-		F44B02182579777A00B44DC0 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		F44B0220257977EF00B44DC0 /* huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huffman.h; sourceTree = "<group>"; };
-		F44B0221257977EF00B44DC0 /* huffman.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = huffman.c; sourceTree = "<group>"; };
-		F44B022425797AE700B44DC0 /* huffman_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huffman_common.h; sourceTree = "<group>"; };
-		F44B022925797AF600B44DC0 /* io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
-		F44B022A25797AF600B44DC0 /* io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = io.c; sourceTree = "<group>"; };
-		F4523E6F25AA548200723C58 /* argument_parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = argument_parser.h; sourceTree = "<group>"; };
-		F4523E7025AA548200723C58 /* argument_parser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = argument_parser.c; sourceTree = "<group>"; };
+		F48F487F25A74063002E8FDE /* Bubblesort */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Bubblesort; sourceTree = BUILT_PRODUCTS_DIR; };
+		F48F488225A74063002E8FDE /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		F48F488A25A74085002E8FDE /* compare.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compare.c; sourceTree = "<group>"; };
+		F48F488B25A74085002E8FDE /* bubblesort.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bubblesort.c; sourceTree = "<group>"; };
+		F48F488C25A74085002E8FDE /* compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compare.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F44B02122579777A00B44DC0 /* Frameworks */ = {
+		F48F487C25A74063002E8FDE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -48,71 +43,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F44B020C2579777A00B44DC0 = {
+		F48F487625A74062002E8FDE = {
 			isa = PBXGroup;
 			children = (
-				F44B02172579777A00B44DC0 /* Huffman */,
-				F44B02162579777A00B44DC0 /* Products */,
+				F48F488125A74063002E8FDE /* Bubblesort */,
+				F48F488025A74063002E8FDE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		F44B02162579777A00B44DC0 /* Products */ = {
+		F48F488025A74063002E8FDE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F44B02152579777A00B44DC0 /* Huffman */,
+				F48F487F25A74063002E8FDE /* Bubblesort */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F44B02172579777A00B44DC0 /* Huffman */ = {
+		F48F488125A74063002E8FDE /* Bubblesort */ = {
 			isa = PBXGroup;
 			children = (
-				F44B022425797AE700B44DC0 /* huffman_common.h */,
-				F44B02182579777A00B44DC0 /* main.c */,
-				F44B0220257977EF00B44DC0 /* huffman.h */,
-				F44B0221257977EF00B44DC0 /* huffman.c */,
-				F44B022925797AF600B44DC0 /* io.h */,
-				F44B022A25797AF600B44DC0 /* io.c */,
-				F4523E6F25AA548200723C58 /* argument_parser.h */,
-				F4523E7025AA548200723C58 /* argument_parser.c */,
+				F48F488225A74063002E8FDE /* main.c */,
+				F48F488B25A74085002E8FDE /* bubblesort.c */,
+				F48F488A25A74085002E8FDE /* compare.c */,
+				F48F488C25A74085002E8FDE /* compare.h */,
 			);
-			path = Huffman;
+			path = Bubblesort;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F44B02142579777A00B44DC0 /* Huffman */ = {
+		F48F487E25A74063002E8FDE /* Bubblesort */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F44B021C2579777A00B44DC0 /* Build configuration list for PBXNativeTarget "Huffman" */;
+			buildConfigurationList = F48F488625A74063002E8FDE /* Build configuration list for PBXNativeTarget "Bubblesort" */;
 			buildPhases = (
-				F44B02112579777A00B44DC0 /* Sources */,
-				F44B02122579777A00B44DC0 /* Frameworks */,
-				F44B02132579777A00B44DC0 /* CopyFiles */,
+				F48F487B25A74063002E8FDE /* Sources */,
+				F48F487C25A74063002E8FDE /* Frameworks */,
+				F48F487D25A74063002E8FDE /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Huffman;
-			productName = Huffman;
-			productReference = F44B02152579777A00B44DC0 /* Huffman */;
+			name = Bubblesort;
+			productName = Bubblesort;
+			productReference = F48F487F25A74063002E8FDE /* Bubblesort */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		F44B020D2579777A00B44DC0 /* Project object */ = {
+		F48F487725A74062002E8FDE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
-					F44B02142579777A00B44DC0 = {
-						CreatedOnToolsVersion = 12.2;
+					F48F487E25A74063002E8FDE = {
+						CreatedOnToolsVersion = 12.3;
 					};
 				};
 			};
-			buildConfigurationList = F44B02102579777A00B44DC0 /* Build configuration list for PBXProject "Huffman" */;
+			buildConfigurationList = F48F487A25A74063002E8FDE /* Build configuration list for PBXProject "Bubblesort" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -120,32 +111,31 @@
 				en,
 				Base,
 			);
-			mainGroup = F44B020C2579777A00B44DC0;
-			productRefGroup = F44B02162579777A00B44DC0 /* Products */;
+			mainGroup = F48F487625A74062002E8FDE;
+			productRefGroup = F48F488025A74063002E8FDE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F44B02142579777A00B44DC0 /* Huffman */,
+				F48F487E25A74063002E8FDE /* Bubblesort */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F44B02112579777A00B44DC0 /* Sources */ = {
+		F48F487B25A74063002E8FDE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F44B022B25797AF600B44DC0 /* io.c in Sources */,
-				F4523E7125AA548200723C58 /* argument_parser.c in Sources */,
-				F44B02192579777A00B44DC0 /* main.c in Sources */,
-				F44B0222257977EF00B44DC0 /* huffman.c in Sources */,
+				F48F488325A74063002E8FDE /* main.c in Sources */,
+				F48F488E25A74085002E8FDE /* bubblesort.c in Sources */,
+				F48F488D25A74085002E8FDE /* compare.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		F44B021A2579777A00B44DC0 /* Debug */ = {
+		F48F488425A74063002E8FDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -196,7 +186,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -204,7 +194,7 @@
 			};
 			name = Debug;
 		};
-		F44B021B2579777A00B44DC0 /* Release */ = {
+		F48F488525A74063002E8FDE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -249,17 +239,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		F44B021D2579777A00B44DC0 /* Debug */ = {
+		F48F488725A74063002E8FDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6D674326DK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -267,10 +256,9 @@
 			};
 			name = Debug;
 		};
-		F44B021E2579777A00B44DC0 /* Release */ = {
+		F48F488825A74063002E8FDE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6D674326DK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -281,25 +269,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F44B02102579777A00B44DC0 /* Build configuration list for PBXProject "Huffman" */ = {
+		F48F487A25A74063002E8FDE /* Build configuration list for PBXProject "Bubblesort" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F44B021A2579777A00B44DC0 /* Debug */,
-				F44B021B2579777A00B44DC0 /* Release */,
+				F48F488425A74063002E8FDE /* Debug */,
+				F48F488525A74063002E8FDE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F44B021C2579777A00B44DC0 /* Build configuration list for PBXNativeTarget "Huffman" */ = {
+		F48F488625A74063002E8FDE /* Build configuration list for PBXNativeTarget "Bubblesort" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F44B021D2579777A00B44DC0 /* Debug */,
-				F44B021E2579777A00B44DC0 /* Release */,
+				F48F488725A74063002E8FDE /* Debug */,
+				F48F488825A74063002E8FDE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = F44B020D2579777A00B44DC0 /* Project object */;
+	rootObject = F48F487725A74062002E8FDE /* Project object */;
 }

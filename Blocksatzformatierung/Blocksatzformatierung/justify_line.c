@@ -57,6 +57,11 @@ extern void justify_line(char *p_line, int target_line_length, char *p_justified
     gap_count = token_count - 1;
     whitespace_count = target_line_length - char_count;
     
+    if (gap_count > whitespace_count)
+    {
+        whitespace_count = gap_count;
+    }
+    
     if (gap_count != 0)
     {
         gap_width = whitespace_count / gap_count;
@@ -102,7 +107,7 @@ static void justify_line_helper(char *p_line, char *p_justified_line)
     *p_justified_line = END_OF_LINE;
 }
 
-static void line_info(char *p_line, int* token_count, int* char_count)
+static void line_info(char *p_line, int *token_count, int *char_count)
 {
     skip_white_spaces(&p_line);
 
@@ -113,10 +118,10 @@ static void line_info(char *p_line, int* token_count, int* char_count)
             (*char_count)++;
             p_line++;
         }
+        
+        (*token_count)++;
 
         skip_white_spaces(&p_line);
-
-        (*token_count)++;
     }
 }
 

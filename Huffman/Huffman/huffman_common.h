@@ -14,6 +14,14 @@ typedef enum {
     ONE
 } BIT;
 
+typedef enum {
+    SUCCESS = 0,
+    UNKNOWN_ERROR,
+    COMMANDLINEARGUMENT_ERROR,
+    IO_ERROR,
+    COMPRESS_ERROR,
+} EXITCODE;
+
 #ifdef DEBUG
 #include <stdio.h>
 /**
