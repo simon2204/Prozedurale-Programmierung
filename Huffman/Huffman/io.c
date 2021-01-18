@@ -34,6 +34,50 @@ static unsigned int in_buffer_size;
 /// Füllstand von `out_buffer` in Bit
 static unsigned int out_buffer_size;
 
+static FILE *input_stream;
+
+static FILE *output_stream;
+
+extern void open_infile(char in_filename[])
+{
+    input_stream = fopen(in_filename, "rb");
+    
+    size_t read_count;
+    
+    if (input_stream == NULL)
+    {
+        printf("Die Datei konnte nicht geöffnet werden.");
+        exit(IO_ERROR);
+    }
+    
+    read_count = fread(in_buffer, sizeof(char), BUF_SIZE, input_stream);
+    
+    in_buffer_size = (unsigned int) read_count * BYTE_SIZE;
+}
+
+extern void open_outfile(char out_filename[])
+{
+    output_stream = fopen(out_filename, "wb");
+    
+    if (input_stream == NULL)
+    {
+        printf("Die Datei konnte nicht geöffnet werden.");
+        exit(IO_ERROR);
+    }
+    
+    fwrite(out_buffer, sizeof(char), BUF_SIZE, output_stream);
+}
+
+extern void close_infile(void)
+{
+    fclose(input_stream);
+}
+
+extern void close_outfile(void)
+{
+    fclose(output_stream);
+}
+
 extern void init_in(char text[])
 {
     lese_position = 0;

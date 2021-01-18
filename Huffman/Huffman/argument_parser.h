@@ -16,4 +16,14 @@
 
 extern void parse_argv(int argc, char **argv);
 
+extern void get_outfile(char outfile_name[]);
+
+extern bool compress_file(void);
+
+extern bool decompress_file(void);
+
+extern bool print_verbose_info(void);
+
+extern bool needs_help(void);
+
 #endif /* argument_parser_h */

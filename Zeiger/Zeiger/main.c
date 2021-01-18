@@ -6,6 +6,7 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 
 void xxx(void)
 {
@@ -32,10 +33,20 @@ void xxx(void)
     printf("7. %s\n", (lectures[2] + 2)); //7. Prints "I"
 }
 
+char* irgendwas()
+{
+    char *helloWorld;
+    
+    helloWorld = "Hello, World!";
+
+    return helloWorld;
+}
+
 int main(void)
 {
     
-    xxx();
+//    xxx();
+
     
     return 0;
 }

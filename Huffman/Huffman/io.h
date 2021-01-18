@@ -18,7 +18,16 @@
 #define io_h
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include "huffman_common.h"
+
+extern void open_infile(char in_filename[]);
+
+extern void open_outfile(char out_filename[]);
+
+extern void close_infile(void);
+
+extern void close_outfile(void);
 
 /// Initialisiert den internen Eigabepuffer mit 'text'.
 /// @param text - Der zu initialisiertende Text.
