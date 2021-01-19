@@ -56,6 +56,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-h"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-o"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -73,7 +77,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-c -l 5 -v -o out.txt in.txt"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-d -o in.txt in.txt"
@@ -81,6 +85,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-c -l5 -o out.txt -u in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c -l5 -o out.txt -u in.txt -h"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

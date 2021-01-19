@@ -42,17 +42,15 @@ extern void open_infile(char in_filename[])
 {
     input_stream = fopen(in_filename, "rb");
     
-    size_t read_count;
-    
     if (input_stream == NULL)
     {
         printf("Die Datei konnte nicht geöffnet werden.");
         exit(IO_ERROR);
     }
     
-    read_count = fread(in_buffer, sizeof(char), BUF_SIZE, input_stream);
+    init_in();
     
-    in_buffer_size = (unsigned int) read_count * BYTE_SIZE;
+    read_infile();
 }
 
 extern void open_outfile(char out_filename[])
@@ -65,7 +63,18 @@ extern void open_outfile(char out_filename[])
         exit(IO_ERROR);
     }
     
-    fwrite(out_buffer, sizeof(char), BUF_SIZE, output_stream);
+    init_out();
+    
+//    fwrite(out_buffer, sizeof(char), BUF_SIZE, output_stream);
+}
+
+static void read_infile(void)
+{
+    size_t read_count;
+    
+    read_count = fread(in_buffer, sizeof(char), BUF_SIZE, input_stream);
+    
+    in_buffer_size = (unsigned int) read_count * BYTE_SIZE;
 }
 
 extern void close_infile(void)
@@ -78,17 +87,10 @@ extern void close_outfile(void)
     fclose(output_stream);
 }
 
-extern void init_in(char text[])
+extern void init_in(void)
 {
     lese_position = 0;
-    unsigned int segment = 0;
-    char buchstabe = text[0];
-    while (buchstabe != '\0') {
-        in_buffer[segment] = buchstabe;
-        segment += 1;
-        buchstabe = text[segment];
-    }
-    in_buffer_size = segment * BYTE_SIZE;
+    in_buffer_size = 0;
 }
 
 extern void init_out(void)
@@ -117,6 +119,13 @@ extern unsigned char read_char(void)
     unsigned int segment = lese_position / BYTE_SIZE;
     unsigned char next_char = in_buffer[segment];
     lese_position += BYTE_SIZE;
+    
+    if (lese_position == in_buffer_size)
+    {
+        lese_position = 0;
+        read_infile();
+    }
+    
     return next_char;
 }
 
@@ -139,6 +148,13 @@ extern BIT read_bit(void)
     unsigned int pos = lese_position % BYTE_SIZE;
     BIT next_bit = GET_BIT(in_buffer[segment], pos);
     lese_position++;
+    
+    if (lese_position == in_buffer_size)
+    {
+        lese_position = 0;
+        read_infile();
+    }
+    
     return next_bit;
 }
 

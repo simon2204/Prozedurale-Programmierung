@@ -29,9 +29,10 @@ extern void close_infile(void);
 
 extern void close_outfile(void);
 
-/// Initialisiert den internen Eigabepuffer mit 'text'.
-/// @param text - Der zu initialisiertende Text.
-extern void init_in(char text[]);
+static void read_infile(void);
+
+/// Initialisiert den internen Eigabepuffer.
+extern void init_in(void);
 
 /// Leert den Ausgabepuffer.
 extern void init_out(void);

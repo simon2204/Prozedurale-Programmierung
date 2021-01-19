@@ -51,11 +51,12 @@
 
 extern void test_rd_chars_wr_bits(char in_filename[], char out_filename[])
 {
-    
+    open_infile(in_filename);
+    open_outfile(out_filename);
 }
 
 
 extern void test_rd_bits_wr_chars(char in_filename[], char out_filename[])
 {
-
+    
 }

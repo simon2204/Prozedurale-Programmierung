@@ -7,8 +7,10 @@
 
 #include "argument_parser.h"
 
-static bool compress;
-static bool decompress;
+static void show_help(void);
+static void print_err(char *msg, ...);
+
+static HUFFMAN_MODE mode;
 static bool verbose;
 static bool help;
 static int level;
@@ -17,8 +19,7 @@ static char *filename;
 
 extern void parse_argv(int argc, char **argv)
 {
-    compress = false;
-    decompress = false;
+    mode = NOT_SET;
     verbose = false;
     help = false;
     level = 2;
@@ -35,18 +36,15 @@ extern void parse_argv(int argc, char **argv)
             // Wenn nach einem '-' das Ende erreicht wurde
             if (*(argv[i] + 1) == '\0')
             {
-                printf("Nach '-' wird eine Option erwartet.\n");
-                exit(COMMANDLINEARGUMENT_ERROR);
+                print_err("Nach '-' wird eine Option erwartet.");
             }
             
             switch (*(argv[i] + 1)) {
                 case 'c':
-                    compress = true;
-                    decompress = false;
+                    mode = COMPRESS;
                     break;
                 case 'd':
-                    decompress = true;
-                    compress = false;
+                    mode = DECOMPRESS;
                     break;
                 case 'v':
                     verbose = true;
@@ -55,21 +53,19 @@ extern void parse_argv(int argc, char **argv)
                     help = true;
                     break;
                 case 'l':
-                    // Erster Character nach '-l'
+                    // Erster Character nach '-l9'
                     level = *(argv[i] + 2);
                     
                     // Wenn nach '-l' nichts mehr folgt.
                     if (level == '\0')
                     {
-                        printf("Es wurde kein Argument für <level> übergeben.\n");
-                        exit(COMMANDLINEARGUMENT_ERROR);
+                        print_err("Es wurde kein Argument für <level> übergeben.");
                     }
                     // Wenn das Argument von '-l' nicht zwischen '1' und '9' liegt
                     // oder wenn das Argument zweistellig ist
                     if (level < '1' || level > '9' || *(argv[i] + 3) != '\0')
                     {
-                        printf("<level> muss zwischen 1 und 9 liegen.\n");
-                        exit(COMMANDLINEARGUMENT_ERROR);
+                        print_err("<level> muss zwischen 1 und 9 liegen.");
                     }
                     break;
                 case 'o':
@@ -80,16 +76,14 @@ extern void parse_argv(int argc, char **argv)
                     }
                     // Beim nächsten Durchlauf soll das Argument von '-o' übersprungen werden.
                     i++;
-                    // 
+
                     if (outfile != NULL && *outfile == '-')
                     {
-                        printf("Es wurde kein Argument für <outfile> übergeben.\n");
-                        exit(COMMANDLINEARGUMENT_ERROR);
+                        print_err("Es wurde kein Argument für <outfile> übergeben.");
                     }
                     break;
                 default:
-                    printf("Ungültige Option '-%c'.\n", *(argv[i] + 1));
-                    exit(COMMANDLINEARGUMENT_ERROR);
+                    print_err("Ungültige Option '-%c'.", *(argv[i] + 1));
                     break;
             }
         }
@@ -97,32 +91,37 @@ extern void parse_argv(int argc, char **argv)
         {
             if (filename != NULL)
             {
-                printf("'%s' wurde bereits als Name der Eingabedatei übergeben.\n", filename);
-                exit(COMMANDLINEARGUMENT_ERROR);
+                print_err("'%s' wurde bereits als Name der Eingabedatei übergeben.", filename);
             }
             filename = argv[i];
         }
     }
     
+    if (help)
+    {
+        show_help();
+    }
+    
     if (filename == NULL)
     {
-        printf("Es wurde kein Argument für <filename> übergeben.\n");
-        exit(COMMANDLINEARGUMENT_ERROR);
+        print_err("Es wurde kein Argument für <filename> übergeben.");
     }
     
     if (outfile != NULL && strcmp(outfile, filename) == 0)
     {
-        printf("<outfile> und <filename> dürfen nicht den selben Namen haben.\n");
-        exit(COMMANDLINEARGUMENT_ERROR);
+        print_err("<outfile> und <filename> dürfen nicht den selben Namen haben.");
     }
     
-    if (!compress && !decompress)
+    if (mode == NOT_SET)
     {
-        printf("Es muss mindestens '-c' oder '-d' als Option übergeben werden.\n");
-        exit(COMMANDLINEARGUMENT_ERROR);
+        print_err("Es muss mindestens '-c' oder '-d' als Option übergeben werden.");
     }
 }
 
+extern void get_infile(char infile_name[])
+{
+    strcpy(infile_name, filename);
+}
 
 extern void get_outfile(char outfile_name[])
 {
@@ -130,7 +129,7 @@ extern void get_outfile(char outfile_name[])
     {
         strcpy(filename, outfile_name);
         
-        if (compress)
+        if (COMPRESS)
         {
             strcat(outfile_name, ".hc");
         }
@@ -145,22 +144,58 @@ extern void get_outfile(char outfile_name[])
     }
 }
 
-extern bool compress_file(void)
+extern HUFFMAN_MODE huffman_mode(void)
 {
-    return compress;
+    return mode;
 }
 
-extern bool decompress_file(void)
-{
-    return decompress;
-}
-
-extern bool print_verbose_info(void)
+extern bool wants_verbose_info(void)
 {
     return verbose;
 }
 
-extern bool needs_help(void)
+static void print_err(char *msg, ...)
 {
-    return help;
+    va_list args;
+    
+    va_start(args, msg);
+    
+    char *usage = "Usage: huffman <options> <filename>\n"
+    "  See 'huffman -h' for more information.";
+    
+    printf("Error: ");
+    
+    vprintf(msg, args);
+    
+    printf("\n%s\n", usage);
+    
+    exit(COMMANDLINEARGUMENT_ERROR);
+}
+
+static void show_help(void)
+{
+    char *overview = "OVERVIEW: Komprimieren und Dekomprimieren einer Eingabedatei.\n\n";
+    
+    char *usage = "USAGE: huffman <options> <filename>\n\n";
+    
+    char *arguments = "ARGUMENTS:\n"
+    "  <filename>       Name der Eingabedatei.\n\n";
+    
+    char *options = "OPTIONS:\n"
+    "  -c               Die Eingabedatei wird komprimiert.\n"
+    "  -d               Die Eingabedatei wird dekomprimiert.\n"
+    "                   Sind im Aufruf beide Optionen -c und -d angegeben,\n"
+    "                   bestimmt die letzte Angabe, ob komprimiert oder dekomprimiert wird.\n"
+    "  -l<level>        Legt den Level der Komprimierung fest.\n"
+    "                   Der Wert für den Level muss zwischen 1 und 9 liegen.\n"
+    "                   Fehlt die Option, wird der Level standardmäßig auf 2 eingestellt.\n"
+    "                   Der Parameter wird ignoriert, wenn die Option -d angegeben wurde.\n"
+    "  -v               Gibt Informationen über die Komprimierung bzw. Dekomprimierung aus.\n"
+    "  -o <outfile>     Legt den Namen der Ausgabedatei fest. Wird die Option weggelassen,\n"
+    "                   wird der Name der Ausgabedatei standardmäßig festgelegt.\n"
+    "  -h               Zeigt eine Hilfe an, die die Benutzung des Programms erklärt.\n";
+    
+    printf("%s%s%s%s", overview, usage, arguments, options);
+    
+    exit(SUCCESS);
 }
