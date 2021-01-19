@@ -21,7 +21,7 @@
 
 static void read_infile(void);
 
-static void write_infile(void);
+static void write_outfile(void);
 
 /// Eingabe Buffer
 static unsigned char in_buffer[BUF_SIZE];
@@ -29,18 +29,35 @@ static unsigned char in_buffer[BUF_SIZE];
 static unsigned char out_buffer[BUF_SIZE];
 
 /// Das nächst zulesende Bit
-static unsigned int lese_position;
-/// Das nächst zuschreibende Bit
-static unsigned int schreib_position;
+static int lese_position(void);
 
-/// Füllstand von `in_buffer` in Bit
+static unsigned int lese_segment;
+static unsigned int lese_element;
+
+/// Das nächst zuschreibende Bit
+//static unsigned int schreib_position;
+
+static unsigned int schreib_segment;
+static unsigned int schreib_element;
+
+/// Füllstand von `in_buffer` in Byte
 static unsigned int in_buffer_size;
-/// Füllstand von `out_buffer` in Bit
-static unsigned int out_buffer_size;
+/// Füllstand von `out_buffer` in Byte
+static int out_buffer_size(void);
 
 static FILE *input_stream;
 
 static FILE *output_stream;
+
+static int out_buffer_size(void)
+{
+    return schreib_segment + (schreib_element > 0 ? 1 : 0);
+}
+
+static int lese_position(void)
+{
+    return lese_segment + (lese_element > 0 ? 1 : 0);
+}
 
 extern void open_infile(char in_filename[])
 {
@@ -76,14 +93,13 @@ static void read_infile(void)
     
     read_count = fread(in_buffer, sizeof(char), BUF_SIZE, input_stream);
     
-    in_buffer_size = (unsigned int) read_count * BYTE_SIZE;
+    in_buffer_size = (unsigned int) read_count;
 }
 
-static void write_infile(void)
+static void write_outfile(void)
 {
-    fwrite(out_buffer, sizeof(char), out_buffer_size / BYTE_SIZE, output_stream);
-    schreib_position = 0;
-    out_buffer_size = 0;
+    fwrite(out_buffer, sizeof(char), out_buffer_size(), output_stream);
+    init_out();
 }
 
 extern void close_infile(void)
@@ -95,7 +111,7 @@ extern void close_outfile(void)
 {
     if (out_buffer_size > 0)
     {
-        write_infile();
+        write_outfile();
     }
     
     fclose(output_stream);
@@ -103,30 +119,29 @@ extern void close_outfile(void)
 
 extern void init_in(void)
 {
-    lese_position = 0;
-    in_buffer_size = 0;
+    lese_segment = 0;
+    lese_element = 0;
 }
 
 extern void init_out(void)
 {
-    schreib_position = 0;
-    out_buffer_size = 0;
+    schreib_segment = 0;
+    schreib_element = 0;
 }
 
 extern bool has_next_char(void)
 {
-    return lese_position < in_buffer_size;
+    return lese_segment < in_buffer_size;
 }
 
 extern unsigned char read_char(void)
 {
-    unsigned int segment = lese_position / BYTE_SIZE;
-    unsigned char next_char = in_buffer[segment];
-    lese_position += BYTE_SIZE;
+    unsigned char next_char = in_buffer[lese_segment];
+    lese_segment++;
     
-    if (lese_position == in_buffer_size)
+    if (lese_segment == in_buffer_size)
     {
-        lese_position = 0;
+        lese_segment = 0;
         read_infile();
     }
     
@@ -135,33 +150,34 @@ extern unsigned char read_char(void)
 
 extern void write_char(unsigned char c)
 {
-    unsigned int segment = schreib_position / BYTE_SIZE;
-    out_buffer[segment] = c;
-    schreib_position += BYTE_SIZE;
-    out_buffer_size += BYTE_SIZE;
+    out_buffer[schreib_segment] = c;
+    schreib_segment++;
     
-    
-    if (out_buffer_size / BYTE_SIZE == BUF_SIZE)
+    if (out_buffer_size() == BUF_SIZE)
     {
-        write_infile();
+        write_outfile();
     }
 }
 
 extern bool has_next_bit(void)
 {
-    return lese_position < in_buffer_size;
+    return lese_position() < in_buffer_size;
 }
 
 extern BIT read_bit(void)
 {
-    unsigned int segment = lese_position / BYTE_SIZE;
-    unsigned int pos = lese_position % BYTE_SIZE;
-    BIT next_bit = GET_BIT(in_buffer[segment], pos);
-    lese_position++;
+    BIT next_bit = GET_BIT(in_buffer[lese_segment], lese_element);
+    lese_element++;
     
-    if (lese_position == in_buffer_size)
+    if (lese_element == BYTE_SIZE)
     {
-        lese_position = 0;
+        lese_segment++;
+        lese_element = 0;
+    }
+    
+    if (lese_position() == in_buffer_size)
+    {
+        init_in();
         read_infile();
     }
     
@@ -170,9 +186,19 @@ extern BIT read_bit(void)
 
 extern void write_bit(BIT c)
 {
-    unsigned int segment = schreib_position / BYTE_SIZE;
-    unsigned int pos = schreib_position % BYTE_SIZE;
-    out_buffer[segment] = PUT_BIT(out_buffer[segment], c, pos);
-    schreib_position++;
-    out_buffer_size++;
+    out_buffer[schreib_segment] = PUT_BIT(out_buffer[schreib_segment], c, schreib_element);
+    
+    schreib_element++;
+    
+    if (schreib_element == BYTE_SIZE)
+    {
+        schreib_segment++;
+        schreib_element = 0;
+    }
+    
+    if (out_buffer_size() == BUF_SIZE)
+    {
+        write_outfile();
+    }
+
 }
