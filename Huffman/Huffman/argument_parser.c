@@ -127,9 +127,9 @@ extern void get_outfile(char outfile_name[])
 {
     if (outfile == NULL)
     {
-        strcpy(filename, outfile_name);
+        strcpy(outfile_name, filename);
         
-        if (COMPRESS)
+        if (mode == COMPRESS)
         {
             strcat(outfile_name, ".hc");
         }

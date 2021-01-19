@@ -32,8 +32,7 @@ int main(int argc, char * argv[]) {
     get_infile(in_filename);
     get_outfile(out_filename);
     
-    test_rd_bits_wr_chars(in_filename, out_filename);
-    
+    test_rd_chars_wr_bits(in_filename, out_filename);
     
     
     return 0;

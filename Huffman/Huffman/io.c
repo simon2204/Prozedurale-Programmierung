@@ -19,6 +19,10 @@
 /// und gibt ein neues BYTE mit dem gesetzten bzw. geöschten Bit zurück.
 #define PUT_BIT(BYTE, BIT, POS) (BIT == ZERO ? ~(0x80u >> POS) & BYTE : (0x80u >> POS) | BYTE)
 
+static void read_infile(void);
+
+static void write_infile(void);
+
 /// Eingabe Buffer
 static unsigned char in_buffer[BUF_SIZE];
 /// Ausgabe Buffer
@@ -57,15 +61,13 @@ extern void open_outfile(char out_filename[])
 {
     output_stream = fopen(out_filename, "wb");
     
-    if (input_stream == NULL)
+    if (output_stream == NULL)
     {
         printf("Die Datei konnte nicht geöffnet werden.");
         exit(IO_ERROR);
     }
     
     init_out();
-    
-//    fwrite(out_buffer, sizeof(char), BUF_SIZE, output_stream);
 }
 
 static void read_infile(void)
@@ -77,6 +79,13 @@ static void read_infile(void)
     in_buffer_size = (unsigned int) read_count * BYTE_SIZE;
 }
 
+static void write_infile(void)
+{
+    fwrite(out_buffer, sizeof(char), out_buffer_size / BYTE_SIZE, output_stream);
+    schreib_position = 0;
+    out_buffer_size = 0;
+}
+
 extern void close_infile(void)
 {
     fclose(input_stream);
@@ -84,6 +93,11 @@ extern void close_infile(void)
 
 extern void close_outfile(void)
 {
+    if (out_buffer_size > 0)
+    {
+        write_infile();
+    }
+    
     fclose(output_stream);
 }
 
@@ -97,16 +111,6 @@ extern void init_out(void)
 {
     schreib_position = 0;
     out_buffer_size = 0;
-}
-
-extern void get_out_buffer(char text[])
-{
-    unsigned int i;
-    for (i = 0; i < out_buffer_size / BYTE_SIZE; i++)
-    {
-        text[i] = out_buffer[i];
-    }
-    text[i] = '\0';
 }
 
 extern bool has_next_char(void)
@@ -135,6 +139,12 @@ extern void write_char(unsigned char c)
     out_buffer[segment] = c;
     schreib_position += BYTE_SIZE;
     out_buffer_size += BYTE_SIZE;
+    
+    
+    if (out_buffer_size / BYTE_SIZE == BUF_SIZE)
+    {
+        write_infile();
+    }
 }
 
 extern bool has_next_bit(void)

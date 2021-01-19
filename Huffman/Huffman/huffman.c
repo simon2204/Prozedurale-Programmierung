@@ -51,8 +51,24 @@
 
 extern void test_rd_chars_wr_bits(char in_filename[], char out_filename[])
 {
+    printf("In: %s\n", in_filename);
+    printf("Out: %s\n", out_filename);
     open_infile(in_filename);
     open_outfile(out_filename);
+    
+    while (has_next_char()) {
+        if (read_char() < 'a')
+        {
+            write_char('1');
+        }
+        else
+        {
+            write_char('0');
+        }
+    }
+    
+    close_infile();
+    close_outfile();
 }
 
 

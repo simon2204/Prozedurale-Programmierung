@@ -29,17 +29,11 @@ extern void close_infile(void);
 
 extern void close_outfile(void);
 
-static void read_infile(void);
-
 /// Initialisiert den internen Eigabepuffer.
 extern void init_in(void);
 
 /// Leert den Ausgabepuffer.
 extern void init_out(void);
-
-/// Der Ausgabepuffer wird Ausgelesen und in den Vektor 'text' kopiert.
-/// @param text - Ausgabeparameter des Ausgabepuffers.
-extern void get_out_buffer(char text[]);
 
 /// Gibt an, ob noch weitere Zeichen aus dem Eingabepuffer mit read_char gelesen werden können.
 /// @return liefert true, wenn sich noch ein weiteres Zeichen zum Lesen im Eingabepuffer befindet.
