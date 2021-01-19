@@ -19,21 +19,21 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "huffman_common.h"
+#include "argument_parser.h"
 
+/// Öffnet die Eingabedatei `in_filename`
 extern void open_infile(char in_filename[]);
 
+/// Öffnet die Ausgabedatei `out_filename`
 extern void open_outfile(char out_filename[]);
 
+/// Schließt die zuvor geöffnete Datei von `open_infile`
 extern void close_infile(void);
 
+/// Schließt die zuvor geöffnete Datei von `open_outfile`
 extern void close_outfile(void);
-
-/// Initialisiert den internen Eigabepuffer.
-extern void init_in(void);
-
-/// Leert den Ausgabepuffer.
-extern void init_out(void);
 
 /// Gibt an, ob noch weitere Zeichen aus dem Eingabepuffer mit read_char gelesen werden können.
 /// @return liefert true, wenn sich noch ein weiteres Zeichen zum Lesen im Eingabepuffer befindet.

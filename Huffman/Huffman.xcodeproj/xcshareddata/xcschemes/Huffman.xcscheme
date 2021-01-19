@@ -56,7 +56,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-c /Users/Simon/Desktop/readCharWriteChar.txt -o /Users/Simon/Desktop/readCharWriteCharOut.txt"
+            argument = "-c /Users/Simon/Desktop/readCharWriteChar.txt -o /Users/Simon/Desktop/readCharWriteCharOut.txt -v"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -93,6 +93,42 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-c -l5 -o out.txt -u in.txt -h"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c -o out.txt -l7 -v in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = ""
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c -o in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-d -o out.txt in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c -x in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c -l in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c -l45 in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c -o in.txt in.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "in.txt"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

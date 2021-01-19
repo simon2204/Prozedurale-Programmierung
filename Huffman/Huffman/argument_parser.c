@@ -93,7 +93,18 @@ extern void parse_argv(int argc, char **argv)
             {
                 print_err("'%s' wurde bereits als Name der Eingabedatei übergeben.", filename);
             }
+            
             filename = argv[i];
+            
+            FILE *file_stream = fopen(filename, "r");
+            
+            if (file_stream == NULL)
+            {
+                printf("Die Datei konnte nicht geöffnet werden.\n");
+                exit(IO_ERROR);
+            }
+            
+            fclose(file_stream);
         }
     }
     
