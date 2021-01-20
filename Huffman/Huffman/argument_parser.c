@@ -7,6 +7,8 @@
 
 #include "argument_parser.h"
 
+#define SUFFIX 4
+
 static void show_help(void);
 static void print_err(char *msg, ...);
 
@@ -131,14 +133,14 @@ extern void parse_argv(int argc, char **argv)
 
 extern void get_infile(char infile_name[])
 {
-    strcpy(infile_name, filename);
+    strncpy(infile_name, filename, FILE_NAME_LENGTH - SUFFIX);
 }
 
 extern void get_outfile(char outfile_name[])
 {
     if (outfile == NULL)
     {
-        strcpy(outfile_name, filename);
+        strncpy(outfile_name, filename, FILE_NAME_LENGTH - SUFFIX);
         
         if (mode == COMPRESS)
         {

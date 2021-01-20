@@ -13,11 +13,10 @@
 
 int main(int argc, char * argv[]) {
 
-
     parse_argv(argc, argv);
     
-    char in_filename[1024];
-    char out_filename[1024];
+    char in_filename[FILE_NAME_LENGTH];
+    char out_filename[FILE_NAME_LENGTH];
     
     get_infile(in_filename);
     get_outfile(out_filename);

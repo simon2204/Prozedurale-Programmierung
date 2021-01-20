@@ -7,7 +7,6 @@
 
 #include "huffman.h"
 
-
 extern void test_rd_chars_wr_bits(char in_filename[], char out_filename[])
 {
     clock_t prg_start;

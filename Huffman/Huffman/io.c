@@ -101,7 +101,7 @@ extern void open_outfile(char out_filename[])
 static void read_infile(void)
 {
     init_in();
-    in_buffer_size = (unsigned int) fread(in_buffer, sizeof(char), BUF_SIZE, input_stream);
+    in_buffer_size = fread(in_buffer, sizeof(char), BUF_SIZE, input_stream);
 }
 
 static void write_outfile(void)

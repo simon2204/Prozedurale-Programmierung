@@ -15,6 +15,8 @@
 #include <stdarg.h>
 #include "huffman_common.h"
 
+#define FILE_NAME_LENGTH 1028
+
 extern void parse_argv(int argc, char **argv);
 
 extern void get_infile(char infile_name[]);
