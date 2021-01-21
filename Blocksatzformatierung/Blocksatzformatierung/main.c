@@ -15,7 +15,7 @@
 
 
 int main(int argc, const char * argv[]) {
-    
+
 #if DEBUG
     char line1[] = "12345678901234567890123456789012345678901234567890123456789012345678901234567890";
     char line2[] = "";
@@ -29,6 +29,7 @@ int main(int argc, const char * argv[]) {
     char line10[] = "123456789 345678901   567890123 789012345     901234567 123456789 234567890";
     char line11[] = "123456789 567890123 890123456 123456789 456789012 789012345 0";
     char line12[] = "123456789 567890123 901234567 345678901 789012345 1234567890";
+    char line13[] = "123456789 12345678901  4567890123 56789012345  8901234567  0123456789  234567890123456";
     
     char line1Soll[] = "12345678901234567890123456789012345678901234567890123456789012345678901234567890";
     char line2Soll[] = "";
@@ -42,6 +43,7 @@ int main(int argc, const char * argv[]) {
     char line10Soll[] = "123456789   345678901   567890123   789012345   901234567   123456789  234567890";
     char line11Soll[] = "123456789     567890123    890123456    123456789    456789012    789012345    0";
     char line12Soll[] = "123456789     567890123     901234567     345678901     789012345     1234567890";
+    char line13Soll[] = "123456789 12345678901 4567890123 56789012345 8901234567 0123456789 234567890123456";
     
     char justified_line1[MAX_LINE_LENGTH] = "";
     char justified_line2[MAX_LINE_LENGTH] = "";
@@ -55,15 +57,16 @@ int main(int argc, const char * argv[]) {
     char justified_line10[MAX_LINE_LENGTH] = "";
     char justified_line11[MAX_LINE_LENGTH] = "";
     char justified_line12[MAX_LINE_LENGTH] = "";
+    char justified_line13[MAX_LINE_LENGTH] = "";
     
     int target_line_length = 80;
     
     justify_line(line1, target_line_length, justified_line1);
     assert(strcmp(line1Soll, justified_line1) == 0);
-    
+
     justify_line(line2, target_line_length, justified_line2);
     assert(strcmp(line2Soll, justified_line2) == 0);
-    
+
     justify_line(line3, target_line_length, justified_line3);
     assert(strcmp(line3Soll, justified_line3) == 0);
 
@@ -93,6 +96,10 @@ int main(int argc, const char * argv[]) {
 
     justify_line(line12, target_line_length, justified_line12);
     assert(strcmp(line12Soll, justified_line12) == 0);
+    
+    justify_line(line13, target_line_length, justified_line13);
+    assert(strcmp(line13Soll, justified_line13) == 0);
+    
 #endif
     
     return 0;

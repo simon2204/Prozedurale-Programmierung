@@ -14,6 +14,20 @@ typedef enum {
     ONE
 } BIT;
 
+typedef enum {
+    SUCCESS,
+    UNKNOWN_ERROR,
+    COMMANDLINEARGUMENT_ERROR,
+    IO_ERROR,
+    COMPRESS_ERROR,
+} EXITCODE;
+
+typedef enum {
+    COMPRESS,
+    DECOMPRESS,
+    NOT_SET
+} HUFFMAN_MODE;
+
 #ifdef DEBUG
 #include <stdio.h>
 /**

@@ -19,90 +19,199 @@
 /// und gibt ein neues BYTE mit dem gesetzten bzw. geöschten Bit zurück.
 #define PUT_BIT(BYTE, BIT, POS) (BIT == ZERO ? ~(0x80u >> POS) & BYTE : (0x80u >> POS) | BYTE)
 
+/// Füllt das Byte `BYTE` mit Nullen auf, ab Position `POS`.
+#define PADDING(BYTE, POS) ~(0xFF >> POS) & BYTE
+
+/// Initialisiert den internen Eigabepuffer.
+static void init_in(void);
+
+/// Leert den Ausgabepuffer.
+static void init_out(void);
+
+/// Liest den Inhalt aus `input_stream` in den `in_buffer`
+/// mit einer maximalen Anzahl von `BUF_SIZE` Bytes
+static void read_infile(void);
+
+/// Schreibt den Inhalt von `out_buffer` in den `output_stream`
+/// mit einer maximalen Anzahl von `BUF_SIZE` Bytes
+static void write_outfile(void);
+
 /// Eingabe Buffer
 static unsigned char in_buffer[BUF_SIZE];
 /// Ausgabe Buffer
 static unsigned char out_buffer[BUF_SIZE];
 
-/// Das nächst zulesende Bit
-static unsigned int lese_position;
-/// Das nächst zuschreibende Bit
-static unsigned int schreib_position;
+/// Zeigt auf das nächst zulesende Byte in `in_buffer`
+static unsigned short lese_segment;
+/// Zeigt auf das nächst zulesende Bit in `lese_segment`
+static unsigned short lese_element;
 
-/// Füllstand von `in_buffer` in Bit
-static unsigned int in_buffer_size;
-/// Füllstand von `out_buffer` in Bit
-static unsigned int out_buffer_size;
+/// Zeigt auf das nächst zuschreibende Byte in `out_buffer`
+static unsigned short schreib_segment;
+/// Zeigt auf das nächst zuschreibende Bit in `schreib_segment`
+static unsigned short schreib_element;
 
-extern void init_in(char text[])
+/// Füllstand von `in_buffer` in Byte
+static unsigned short in_buffer_size;
+
+/// Die zu komprimierende oder zu dekomprimierende Datei
+static FILE *input_stream;
+
+/// Die komprimierte oder dekomprimierte Datei
+static FILE *output_stream;
+
+static void init_in(void)
 {
-    lese_position = 0;
-    unsigned int segment = 0;
-    char buchstabe = text[0];
-    while (buchstabe != '\0') {
-        in_buffer[segment] = buchstabe;
-        segment += 1;
-        buchstabe = text[segment];
-    }
-    in_buffer_size = segment * BYTE_SIZE;
+    lese_segment = 0;
+    lese_element = 0;
 }
 
-extern void init_out(void)
+static void init_out(void)
 {
-    schreib_position = 0;
-    out_buffer_size = 0;
+    schreib_segment = 0;
+    schreib_element = 0;
 }
 
-extern void get_out_buffer(char text[])
+extern void open_infile(char in_filename[])
 {
-    unsigned int i;
-    for (i = 0; i < out_buffer_size / BYTE_SIZE; i++)
+    input_stream = fopen(in_filename, "rb");
+    
+    if (input_stream == NULL)
     {
-        text[i] = out_buffer[i];
+        printf("Die Datei konnte nicht geöffnet werden.\n");
+        exit(IO_ERROR);
     }
-    text[i] = '\0';
+
+    read_infile();
+}
+
+extern void open_outfile(char out_filename[])
+{
+    output_stream = fopen(out_filename, "wb");
+    
+    if (output_stream == NULL)
+    {
+        printf("Die Datei konnte nicht erstellt werden.\n");
+        exit(IO_ERROR);
+    }
+    
+    init_out();
+}
+
+static void read_infile(void)
+{
+    init_in();
+    in_buffer_size = fread(in_buffer, sizeof(char), BUF_SIZE, input_stream);
+}
+
+static void write_outfile(void)
+{
+    // Wenn das letzte Byte im `out_buffer` nicht ganz aufgefüllt wurde
+    if (schreib_element != 0)
+    {
+        // wird das letzte Byte mit Nullen aufgefüllt
+        out_buffer[schreib_segment] = PADDING(out_buffer[schreib_segment], schreib_element);
+    }
+    
+    // schreib_segment = 1; schreib_element = 4;
+    // [0: [0,0,1,0,1,1,0,1], 1: [1,0,1,1,0,0,0,0]]
+    unsigned int byte_count = schreib_segment + (schreib_element > 0 ? 1 : 0);
+    
+    fwrite(out_buffer, sizeof(char), byte_count, output_stream);
+    
+    // Nach dem Schreiben in den `output_stream`, soll der `out_buffer`
+    // komplett "geleert" werden
+    init_out();
 }
 
 extern bool has_next_char(void)
 {
-    return lese_position < in_buffer_size;
-}
-
-extern unsigned char read_char(void)
-{
-    unsigned int segment = lese_position / BYTE_SIZE;
-    unsigned char next_char = in_buffer[segment];
-    lese_position += BYTE_SIZE;
-    return next_char;
-}
-
-extern void write_char(unsigned char c)
-{
-    unsigned int segment = schreib_position / BYTE_SIZE;
-    out_buffer[segment] = c;
-    schreib_position += BYTE_SIZE;
-    out_buffer_size += BYTE_SIZE;
+    return lese_segment < in_buffer_size;
 }
 
 extern bool has_next_bit(void)
 {
-    return lese_position < in_buffer_size;
+    return lese_segment < in_buffer_size;
+}
+
+extern unsigned char read_char(void)
+{
+    unsigned char next_char = in_buffer[lese_segment];
+    lese_segment++;
+    
+    if (lese_segment == in_buffer_size)
+    {
+        read_infile();
+    }
+    
+    return next_char;
 }
 
 extern BIT read_bit(void)
 {
-    unsigned int segment = lese_position / BYTE_SIZE;
-    unsigned int pos = lese_position % BYTE_SIZE;
-    BIT next_bit = GET_BIT(in_buffer[segment], pos);
-    lese_position++;
+    BIT next_bit = GET_BIT(in_buffer[lese_segment], lese_element);
+    lese_element++;
+    
+    if (lese_element == BYTE_SIZE)
+    {
+        lese_segment++;
+        lese_element = 0;
+    }
+    
+    if (lese_segment == in_buffer_size)
+    {
+        read_infile();
+    }
+    
     return next_bit;
+}
+
+extern void write_char(unsigned char c)
+{
+    out_buffer[schreib_segment] = c;
+    schreib_segment++;
+    
+    if (schreib_segment == BUF_SIZE)
+    {
+        write_outfile();
+    }
 }
 
 extern void write_bit(BIT c)
 {
-    unsigned int segment = schreib_position / BYTE_SIZE;
-    unsigned int pos = schreib_position % BYTE_SIZE;
-    out_buffer[segment] = PUT_BIT(out_buffer[segment], c, pos);
-    schreib_position++;
-    out_buffer_size++;
+    out_buffer[schreib_segment] = PUT_BIT(out_buffer[schreib_segment], c, schreib_element);
+    
+    schreib_element++;
+    
+    // Wenn ein Byte mit Bits "vollgeschrieben" wurde
+    if (schreib_element == BYTE_SIZE)
+    {
+        // dann wird das nächste Byte "gefüllt"
+        schreib_segment++;
+        schreib_element = 0;
+    }
+    
+    // Wenn der out_buffer voll ist
+    if (schreib_segment == BUF_SIZE)
+    {
+        // wird der Inhalt in den `output_stream` geschrieben
+        write_outfile();
+    }
+}
+
+extern void close_infile(void)
+{
+    fclose(input_stream);
+}
+
+extern void close_outfile(void)
+{
+    // Wenn noch etwas im out_buffer steht
+    if (schreib_segment > 0 || schreib_element > 0)
+    {
+        // wird der restliche Inhalt in `output_stream` geschrieben
+        write_outfile();
+    }
+    
+    fclose(output_stream);
 }
