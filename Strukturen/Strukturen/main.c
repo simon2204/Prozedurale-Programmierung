@@ -24,6 +24,7 @@ typedef struct {
     char titel[50];
     GENRE genre;
     ERSCHEINUNGSDATUM erscheinungsdatum;
+    
 } CD;
 
 // d)
@@ -52,12 +53,12 @@ void print_cd(CD cd)
 // e)
 bool cmp_release_date(ERSCHEINUNGSDATUM *rd1, ERSCHEINUNGSDATUM *rd2)
 {
-    return rd1->jahr == rd2->jahr && rd1->monat == rd2->monat && rd1->tag == rd2->tag;
+    return (rd1->jahr == rd2->jahr) && (rd1->monat == rd2->monat) && (rd1->tag == rd2->tag);
 }
 
 bool cmp_cd(CD *cd1, CD *cd2)
 {
-    bool has_same_title = strcmp(cd1->titel, cd1->titel) == 0;
+    bool has_same_title = strcmp(cd1->titel, cd2->titel) == 0;
     bool has_same_genre = cd1->genre == cd2->genre;
     bool has_same_release_date = cmp_release_date(&cd1->erscheinungsdatum, &cd2->erscheinungsdatum);
     return has_same_title && has_same_genre && has_same_release_date;
@@ -96,13 +97,15 @@ int main(int argc, const char * argv[]) {
     print_cd(cd3);
     
     // e)
+    printf("cd1 %s cd2\n", cmp_cd(&cd1, &cd2) == 0 ? "!=" : "==");
+    printf("cd1 %s cd3\n", cmp_cd(&cd1, &cd3) == 0 ? "!=" : "==");
+    printf("cd2 %s cd3\n", cmp_cd(&cd2, &cd3) == 0 ? "!=" : "==");
     
+//    printf("%d\n", sizeof(unsigned short));
     
+//    CD cd[2];
     
-    
-    printf("cd1 %s cd2\n", cmp_cd(&cd1, &cd2) == 0 ? "==" : "!=");
-    printf("cd1 %s cd3\n", cmp_cd(&cd1, &cd3) == 0 ? "==" : "!=");
-    printf("cd2 %s cd3\n", cmp_cd(&cd2, &cd3) == 0 ? "==" : "!=");
+//    printf("%d\n", sizeof(cd));
     
     return 0;
 }
