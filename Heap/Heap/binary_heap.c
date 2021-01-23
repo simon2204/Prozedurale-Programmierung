@@ -19,14 +19,14 @@
 #define RIGHT_CHILD_INDEX(PARENT_INDEX) (2 * PARENT_INDEX + 2)
 #define PARENT_INDEX(CHILD_INDEX) ((CHILD_INDEX - 1) / 2)
 
-#define HAS_LEFT_CHILD (left_child_idx < count)
-#define HAS_RIGHT_CHILD (right_child_idx < count)
+#define HAS_LEFT_CHILD(INDEX) (INDEX < count)
+#define HAS_RIGHT_CHILD(INDEX) (INDEX < count)
 
 #define LEFT_CHILD(INDEX) elements[INDEX]
 #define RIGHT_CHILD(INDEX) elements[INDEX]
-#define PARENT(INDEX) elements[PARENT_INDEX(INDEX)]
+#define PARENT(INDEX) elements[INDEX]
 
-#define SWAP_ITEMS(IDX1, IDX2) {void *temp = elements[IDX1]; elements[IDX1] = elements[IDX2]; elements[IDX2] = temp;}
+#define SWAP_ELEMENTS(IDX1, IDX2) {void *temp = elements[IDX1]; elements[IDX1] = elements[IDX2]; elements[IDX2] = temp;}
 
 #define ARE_IN_INCREASING_ORDER(FIRST, SECOND) (cmp(FIRST, SECOND) == -1)
 
@@ -109,7 +109,7 @@ extern bool heap_extract_min(void **min_element)
 {
     bool can_extract_min = count > 0;
     
-    if (can_extract_min && ((count << 2) == capacity))
+    if (can_extract_min && (count == (capacity >> 2)))
     {
         heap_shrink();
     }
@@ -136,9 +136,9 @@ static void heap_swim(int start_idx)
     child_idx = start_idx;
     child = elements[start_idx];
     
-    if (ARE_IN_INCREASING_ORDER(child, PARENT(child_idx)))
+    if (ARE_IN_INCREASING_ORDER(child, PARENT(parent_idx)))
     {
-        SWAP_ITEMS(child_idx, parent_idx)
+        SWAP_ELEMENTS(child_idx, parent_idx)
         heap_swim(parent_idx);
     }
 }
@@ -151,7 +151,7 @@ static void heap_sink(int start_idx)
     right_child_idx = RIGHT_CHILD_INDEX(parent_idx);
     
     // Wenn es ein rechtes Kind gibt, dann gibt es auch ein linkes.
-    if (HAS_RIGHT_CHILD)
+    if (HAS_RIGHT_CHILD(right_child_idx))
     {
         left_child = LEFT_CHILD(left_child_idx);
         right_child = RIGHT_CHILD(right_child_idx);
@@ -159,19 +159,19 @@ static void heap_sink(int start_idx)
         if (ARE_IN_INCREASING_ORDER(left_child, right_child)
             && ARE_IN_INCREASING_ORDER(left_child, parent))
         {
-            SWAP_ITEMS(left_child_idx, parent_idx)
+            SWAP_ELEMENTS(left_child_idx, parent_idx)
             heap_sink(left_child_idx);
         }
         else if (ARE_IN_INCREASING_ORDER(right_child, parent))
         {
-            SWAP_ITEMS(right_child_idx, parent_idx)
+            SWAP_ELEMENTS(right_child_idx, parent_idx)
             heap_sink(right_child_idx);
         }
     }
-    else if (HAS_LEFT_CHILD
+    else if (HAS_LEFT_CHILD(left_child_idx)
              && ARE_IN_INCREASING_ORDER(LEFT_CHILD(left_child_idx), parent))
     {
-        SWAP_ITEMS(left_child_idx, parent_idx)
+        SWAP_ELEMENTS(left_child_idx, parent_idx)
         heap_sink(left_child_idx);
     }
 }
