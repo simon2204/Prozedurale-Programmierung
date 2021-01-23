@@ -19,13 +19,11 @@
  * @return liefert 0, wenn beide Zeichen gleich sind; 1, wenn c1 größer ist
  *         als c2; -1, wenn c1 kleiner ist als c2.
  */
-static bool chrcmp(char *c1, char * c2)
+static int chrcmp(char *c1, char * c2)
 {
-//    return (*c1 == *c2)
-//            ? 0
-//            : (*c1 > *c2) ? 1 : -1;
-    
-    return *c1 < *c2;
+    return (*c1 == *c2)
+            ? 0
+            : (*c1 > *c2) ? 1 : -1;
 }
 
 /**
@@ -56,7 +54,7 @@ int main(void)
     /* Heap initialisieren */
 //    heap_init((HEAP_ELEM_COMP) chrcmp, (HEAP_ELEM_PRINT) print_char);
     
-    heap_init((HEAP_ELEM_COMP) chrcmp);
+    heap_init((HEAP_ELEM_COMP) chrcmp, (HEAP_ELEM_PRINT) print_char);
 
     /* Elemente in Heap einfügen */
     for (i = 0; i < (int) strlen(elements); i++)

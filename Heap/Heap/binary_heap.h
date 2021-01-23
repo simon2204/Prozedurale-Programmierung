@@ -16,14 +16,16 @@
  * Typdefinitionen
  * ========================================================================= */
 
-typedef bool (*HEAP_ELEM_COMP) (void* first_element, void* second_element);
+typedef int (*HEAP_ELEM_COMP) (void* first_element, void* second_element);
+
+typedef void (*HEAP_ELEM_PRINT) (void* element);
 
 /* ============================================================================
  * Funktionsprototypen
  * ========================================================================= */
 
 /// Initialisiert den Heap.
-extern void heap_init(HEAP_ELEM_COMP comp);
+extern void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print);
 
 /// Löscht den Heap, d.h., sie gibt den Speicher frei.
 extern void heap_destroy(void);

@@ -19,15 +19,16 @@
 #define RIGHT_CHILD_INDEX(PARENT_INDEX) (2 * PARENT_INDEX + 2)
 #define PARENT_INDEX(CHILD_INDEX) ((CHILD_INDEX - 1) / 2)
 
-#define HAS_LEFT_CHILD(INDEX) (LEFT_CHILD_INDEX(INDEX) < count)
-#define HAS_RIGHT_CHILD(INDEX) (RIGHT_CHILD_INDEX(INDEX) < count)
-#define HAS_PARENT(INDEX) (PARENT_INDEX(INDEX) >= 0)
+#define HAS_LEFT_CHILD (left_child_idx < count)
+#define HAS_RIGHT_CHILD (right_child_idx < count)
 
-#define LEFT_CHILD(INDEX) items[LEFT_CHILD_INDEX(INDEX)]
-#define RIGHT_CHILD(INDEX) items[RIGHT_CHILD_INDEX(INDEX)]
-#define PARENT(INDEX) items[PARENT_INDEX(INDEX)]
+#define LEFT_CHILD(INDEX) elements[INDEX]
+#define RIGHT_CHILD(INDEX) elements[INDEX]
+#define PARENT(INDEX) elements[PARENT_INDEX(INDEX)]
 
-#define SWAP_ITEMS(IDX1, IDX2) {void *temp = items[IDX1]; items[IDX1] = items[IDX2]; items[IDX2] = temp;}
+#define SWAP_ITEMS(IDX1, IDX2) {void *temp = elements[IDX1]; elements[IDX1] = elements[IDX2]; elements[IDX2] = temp;}
+
+#define ARE_IN_INCREASING_ORDER(FIRST, SECOND) (cmp(FIRST, SECOND) == -1)
 
 #define IS_ROOT(INDEX) (INDEX == 0)
 
@@ -39,12 +40,6 @@
 #define MSG_NOT_ENOUGH_MEMORY "ERROR: nicht genügend Speicher vorhanden\n"
 
 /* ============================================================================
- * Typdefinitionen
- * ========================================================================= */
-
-typedef bool (*HEAP_ELEM_COMP) (void* first_element, void* second_element);
-
-/* ============================================================================
  * Funktionsprototypen
  * ========================================================================= */
 
@@ -52,9 +47,9 @@ static void heap_expand(void);
 
 static void heap_shrink(void);
 
-static void heap_upwards(int start_idx);
+static void heap_swim(int start_idx);
 
-static void heap_downwards(int start_idx);
+static void heap_sink(int start_idx);
 
 /* ============================================================================
  * Globale Variablen
@@ -62,29 +57,39 @@ static void heap_downwards(int start_idx);
 
 static unsigned int capacity = INITIAL_CAPACITY;
 static unsigned int count = 0;
-static void **items;
+static void **elements;
+static HEAP_ELEM_COMP cmp;
+static HEAP_ELEM_PRINT print_element;
 
-static HEAP_ELEM_COMP are_in_increasing_order;
+static void *parent;
+static void *child;
+static void *left_child;
+static void *right_child;
+static unsigned int parent_idx;
+static unsigned int child_idx;
+static unsigned int left_child_idx;
+static unsigned int right_child_idx;
 
 /* ============================================================================
  * Funktionsdefinitionen
  * ========================================================================= */
 
-extern void heap_init(HEAP_ELEM_COMP comp)
+extern void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print)
 {
-    items = malloc(INITIAL_CAPACITY * sizeof(void *));
-    if (items == NULL)
+    elements = malloc(INITIAL_CAPACITY * sizeof(void *));
+    if (elements == NULL)
     {
         printf(MSG_NOT_ENOUGH_MEMORY);
         exit(EXIT_FAILURE);
     }
-    are_in_increasing_order = comp;
+    cmp = comp;
+    print_element = print;
 }
 
 extern void heap_destroy(void)
 {
-    free(items);
-    items = NULL;
+    free(elements);
+    elements = NULL;
     capacity = INITIAL_CAPACITY;
     count = 0;
 }
@@ -95,8 +100,8 @@ extern void heap_insert(void *element)
     {
         heap_expand();
     }
-    items[count] = element;
-    heap_upwards(count);
+    elements[count] = element;
+    heap_swim(count);
     count++;
 }
 
@@ -111,76 +116,71 @@ extern bool heap_extract_min(void **min_element)
     
     if (can_extract_min)
     {
-        *min_element = items[0];
+        *min_element = elements[0];
         count--;
-        items[0] = items[count];
-        heap_downwards(0);
+        elements[0] = elements[count];
+        heap_sink(0);
     }
     
     return can_extract_min;
 }
 
-static void heap_upwards(int start_idx)
+static void heap_swim(int start_idx)
 {
-    int parent_index;
-    
     if (IS_ROOT(start_idx))
     {
         return;
     }
     
-    parent_index = PARENT_INDEX(start_idx);
+    parent_idx = PARENT_INDEX(start_idx);
+    child_idx = start_idx;
+    child = elements[start_idx];
     
-    if (are_in_increasing_order(items[start_idx], PARENT(start_idx)))
+    if (ARE_IN_INCREASING_ORDER(child, PARENT(child_idx)))
     {
-        SWAP_ITEMS(start_idx, parent_index)
-        heap_upwards(parent_index);
+        SWAP_ITEMS(child_idx, parent_idx)
+        heap_swim(parent_idx);
     }
 }
 
-static void heap_downwards(int start_idx)
+static void heap_sink(int start_idx)
 {
-    void *parent = items[start_idx];
-    void *left_child;
-    void *right_child;
+    parent = elements[start_idx];
+    parent_idx = start_idx;
+    left_child_idx = LEFT_CHILD_INDEX(parent_idx);
+    right_child_idx = RIGHT_CHILD_INDEX(parent_idx);
     
-    if (HAS_RIGHT_CHILD(start_idx))
+    // Wenn es ein rechtes Kind gibt, dann gibt es auch ein linkes.
+    if (HAS_RIGHT_CHILD)
     {
-        left_child = LEFT_CHILD(start_idx);
-        right_child = RIGHT_CHILD(start_idx);
+        left_child = LEFT_CHILD(left_child_idx);
+        right_child = RIGHT_CHILD(right_child_idx);
         
-        if (are_in_increasing_order(left_child, right_child))
+        if (ARE_IN_INCREASING_ORDER(left_child, right_child)
+            && ARE_IN_INCREASING_ORDER(left_child, parent))
         {
-            if (are_in_increasing_order(left_child, parent))
-            {
-                SWAP_ITEMS(LEFT_CHILD_INDEX(start_idx), start_idx)
-                heap_downwards(LEFT_CHILD_INDEX(start_idx));
-            }
+            SWAP_ITEMS(left_child_idx, parent_idx)
+            heap_sink(left_child_idx);
         }
-        else
+        else if (ARE_IN_INCREASING_ORDER(right_child, parent))
         {
-            if (are_in_increasing_order(right_child, parent))
-            {
-                SWAP_ITEMS(RIGHT_CHILD_INDEX(start_idx), start_idx)
-                heap_downwards(RIGHT_CHILD_INDEX(start_idx));
-            }
+            SWAP_ITEMS(right_child_idx, parent_idx)
+            heap_sink(right_child_idx);
         }
     }
-    else if (HAS_LEFT_CHILD(start_idx))
+    else if (HAS_LEFT_CHILD
+             && ARE_IN_INCREASING_ORDER(LEFT_CHILD(left_child_idx), parent))
     {
-        if (are_in_increasing_order(LEFT_CHILD(start_idx), parent))
-        {
-            SWAP_ITEMS(LEFT_CHILD_INDEX(start_idx), start_idx)
-            heap_downwards(LEFT_CHILD_INDEX(start_idx));
-        }
+        SWAP_ITEMS(left_child_idx, parent_idx)
+        heap_sink(left_child_idx);
     }
 }
 
 static void heap_expand(void)
 {
     capacity <<= 1;
-    items = realloc(items, capacity * sizeof(void *));
-    if (items == NULL)
+    elements = realloc(elements, capacity * sizeof(void *));
+    if (elements == NULL)
     {
         printf(MSG_NOT_ENOUGH_MEMORY);
         exit(EXIT_FAILURE);
@@ -190,10 +190,15 @@ static void heap_expand(void)
 static void heap_shrink(void)
 {
     capacity >>= 1;
-    items = realloc(items, capacity * sizeof(void *));
-    if (items == NULL)
+    elements = realloc(elements, capacity * sizeof(void *));
+    if (elements == NULL)
     {
         printf(MSG_NOT_ENOUGH_MEMORY);
         exit(EXIT_FAILURE);
     }
+}
+
+extern void heap_print(void)
+{
+    printf("heap_print is not yet implemented");
 }
