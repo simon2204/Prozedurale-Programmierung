@@ -19,11 +19,13 @@
  * @return liefert 0, wenn beide Zeichen gleich sind; 1, wenn c1 größer ist
  *         als c2; -1, wenn c1 kleiner ist als c2.
  */
-static int chrcmp(char *c1, char * c2)
+static bool chrcmp(char *c1, char * c2)
 {
-    return (*c1 == *c2)
-            ? 0
-            : (*c1 > *c2) ? 1 : -1;
+//    return (*c1 == *c2)
+//            ? 0
+//            : (*c1 > *c2) ? 1 : -1;
+    
+    return *c1 < *c2;
 }
 
 /**

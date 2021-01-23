@@ -27,7 +27,7 @@
 #define RIGHT_CHILD(INDEX) items[RIGHT_CHILD_INDEX(INDEX)]
 #define PARENT(INDEX) items[PARENT_INDEX(INDEX)]
 
-#define SWAP_ITEMS(IDX1, IDX2) void *temp = items[IDX1]; items[IDX1] = items[IDX2]; items[IDX2] = temp;
+#define SWAP_ITEMS(IDX1, IDX2) {void *temp = items[IDX1]; items[IDX1] = items[IDX2]; items[IDX2] = temp;}
 
 #define IS_ROOT(INDEX) (INDEX == 0)
 
@@ -111,7 +111,7 @@ extern bool heap_extract_min(void **min_element)
     
     if (can_extract_min)
     {
-        min_element = items[0];
+        *min_element = items[0];
         count--;
         items[0] = items[count];
         heap_downwards(0);
@@ -179,7 +179,7 @@ static void heap_downwards(int start_idx)
 static void heap_expand(void)
 {
     capacity <<= 1;
-    items = realloc(items, capacity);
+    items = realloc(items, capacity * sizeof(void *));
     if (items == NULL)
     {
         printf(MSG_NOT_ENOUGH_MEMORY);
@@ -190,7 +190,7 @@ static void heap_expand(void)
 static void heap_shrink(void)
 {
     capacity >>= 1;
-    items = realloc(items, capacity);
+    items = realloc(items, capacity * sizeof(void *));
     if (items == NULL)
     {
         printf(MSG_NOT_ENOUGH_MEMORY);
