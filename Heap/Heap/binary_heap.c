@@ -109,13 +109,12 @@ extern bool heap_extract_min(void **min_element)
 {
     bool can_extract_min = count > 0;
     
-    if (can_extract_min && (count == (capacity >> 2)))
-    {
-        heap_shrink();
-    }
-    
     if (can_extract_min)
     {
+        if (count == (capacity >> 2))
+        {
+            heap_shrink();
+        }
         *min_element = elements[0];
         count--;
         elements[0] = elements[count];

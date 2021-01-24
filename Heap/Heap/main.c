@@ -51,9 +51,7 @@ int main(void)
     char *expected = "abcdghijnp";
     char result[100];
 
-    /* Heap initialisieren */
-//    heap_init((HEAP_ELEM_COMP) chrcmp, (HEAP_ELEM_PRINT) print_char);
-    
+//     Heap initialisieren
     heap_init((HEAP_ELEM_COMP) chrcmp, (HEAP_ELEM_PRINT) print_char);
 
     /* Elemente in Heap einfügen */
