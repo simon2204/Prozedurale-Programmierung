@@ -55,8 +55,8 @@ static void heap_sink(int start_idx);
  * Globale Variablen
  * ========================================================================= */
 
-static unsigned int capacity = INITIAL_CAPACITY;
-static unsigned int count = 0;
+static unsigned int capacity;
+static unsigned int count;
 static void **elements;
 static HEAP_ELEM_COMP cmp;
 static HEAP_ELEM_PRINT print_element;
@@ -76,6 +76,8 @@ static unsigned int right_child_idx;
 
 extern void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print)
 {
+    capacity = INITIAL_CAPACITY;
+    count = 0;
     elements = malloc(INITIAL_CAPACITY * sizeof(void *));
     if (elements == NULL)
     {
@@ -90,8 +92,6 @@ extern void heap_destroy(void)
 {
     free(elements);
     elements = NULL;
-    capacity = INITIAL_CAPACITY;
-    count = 0;
 }
 
 extern void heap_insert(void *element)
