@@ -36,7 +36,7 @@
  * Symbolische Konstanten
  * ========================================================================= */
 
-#define INITIAL_CAPACITY 4
+#define INITIAL_CAPACITY 10000
 #define MSG_NOT_ENOUGH_MEMORY "ERROR: nicht genügend Speicher vorhanden\n"
 
 /* ============================================================================
@@ -96,10 +96,10 @@ extern void heap_destroy(void)
 
 extern void heap_insert(void *element)
 {
-    if (count == capacity)
-    {
-        heap_expand();
-    }
+//    if (count == capacity)
+//    {
+//        heap_expand();
+//    }
     elements[count] = element;
     heap_swim(count);
     count++;
@@ -111,10 +111,10 @@ extern bool heap_extract_min(void **min_element)
     
     if (can_extract_min)
     {
-        if (count == (capacity >> 2))
-        {
-            heap_shrink();
-        }
+//        if (count == (capacity >> 2))
+//        {
+//            heap_shrink();
+//        }
         *min_element = elements[0];
         count--;
         elements[0] = elements[count];

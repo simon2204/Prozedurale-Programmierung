@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdalign.h>
 
 // a)
 typedef struct {
@@ -22,9 +23,8 @@ typedef enum {
 
 typedef struct {
     char titel[50];
-    GENRE genre;
     ERSCHEINUNGSDATUM erscheinungsdatum;
-    
+    GENRE genre;
 } CD;
 
 // d)
@@ -84,6 +84,11 @@ int main(int argc, const char * argv[]) {
     cd2.erscheinungsdatum.tag = 20;
 
     cd3 = cd1;
+    
+    printf("Alignment of CD: %lu\n", alignof(CD));
+    printf("Alignment of Erscheinungsdatum: %lu\n", alignof(cd1.erscheinungsdatum));
+    printf("Alignment of GENRE: %lu\n", alignof(cd1.genre));
+    printf("Alignment of titel: %lu\n", alignof(cd1.titel));
     
     // c)
     printf("CD: %lu bytes\n", sizeof(CD));
