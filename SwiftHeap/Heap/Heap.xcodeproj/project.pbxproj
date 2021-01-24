@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		17C5700525BD98C200386D49 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C5700425BD98C200386D49 /* main.swift */; };
+		F4DD787125BDA21100D53629 /* binary_heap.c in Sources */ = {isa = PBXBuildFile; fileRef = F4DD787025BDA21100D53629 /* binary_heap.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,9 @@
 /* Begin PBXFileReference section */
 		17C5700125BD98C200386D49 /* Heap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Heap; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C5700425BD98C200386D49 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F4DD786E25BDA21000D53629 /* Heap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Heap-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4DD786F25BDA21100D53629 /* binary_heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = binary_heap.h; sourceTree = "<group>"; };
+		F4DD787025BDA21100D53629 /* binary_heap.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = binary_heap.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,9 @@
 			isa = PBXGroup;
 			children = (
 				17C5700425BD98C200386D49 /* main.swift */,
+				F4DD786F25BDA21100D53629 /* binary_heap.h */,
+				F4DD787025BDA21100D53629 /* binary_heap.c */,
+				F4DD786E25BDA21000D53629 /* Heap-Bridging-Header.h */,
 			);
 			path = Heap;
 			sourceTree = "<group>";
@@ -93,6 +100,7 @@
 				TargetAttributes = {
 					17C5700025BD98C200386D49 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 				};
 			};
@@ -119,6 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4DD787125BDA21100D53629 /* binary_heap.c in Sources */,
 				17C5700525BD98C200386D49 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,10 +253,19 @@
 		17C5700925BD98C200386D49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6D674326DK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
+				SWIFT_OBJC_BRIDGING_HEADER = "Heap/Heap-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -255,10 +273,18 @@
 		17C5700A25BD98C200386D49 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6D674326DK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
+				SWIFT_OBJC_BRIDGING_HEADER = "Heap/Heap-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
