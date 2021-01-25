@@ -11,9 +11,9 @@ struct Heap<Element: Comparable> {
     private(set) var count = 0
     private(set) var capacity: Int
     
-    init(capacity: Int = 1) {
-        self.capacity = capacity
-        elements = UnsafeMutablePointer<UnsafeMutablePointer<Element>>.allocate(capacity: capacity)
+    init(minimumCapacity: Int = 1) {
+        self.capacity = minimumCapacity
+        elements = UnsafeMutablePointer<UnsafeMutablePointer<Element>>.allocate(capacity: minimumCapacity)
     }
 
     mutating func insert(_ newElement: UnsafeMutablePointer<Element>) {
@@ -26,12 +26,19 @@ struct Heap<Element: Comparable> {
     private mutating func extractMin() -> UnsafeMutablePointer<Element>? {
         guard count > 0 else { return nil }
         defer {
-            if (count == (capacity >> 2)) { shrink() }
+            if (count == (capacity &>> 2)) { shrink() }
             count -= 1
             elements[0] = elements[count]
             sink(startIndex: 0)
         }
         return elements[0]
+    }
+    
+    mutating func forEach(element: (UnsafeMutablePointer<Element>) -> Void) {
+        while let pointer = extractMin() {
+            element(pointer)
+        }
+        elements.deallocate()
     }
     
     private mutating func swim(startIndex: Int) {
@@ -85,29 +92,29 @@ struct Heap<Element: Comparable> {
         elements[i2] = temp
     }
     
-    func `deinit`() {
-        elements.deallocate()
-    }
+//    private func `deinit`() {
+//        elements.deallocate()
+//    }
 }
 
 
-extension Heap: Sequence {
-    func makeIterator() -> HeapIterator {
-        return HeapIterator(self)
-    }
-}
-
-
-extension Heap {
-    struct HeapIterator: IteratorProtocol {
-        private var heap: Heap
-        
-        init(_ heap: Heap) {
-            self.heap = heap
-        }
-        
-        mutating func next() -> UnsafeMutablePointer<Element>? {
-            return heap.extractMin()
-        }
-    }
-}
+//extension Heap: Sequence {
+//    func makeIterator() -> HeapIterator {
+//        return HeapIterator(self)
+//    }
+//}
+//
+//
+//extension Heap {
+//    struct HeapIterator: IteratorProtocol {
+//        private var heap: Heap
+//
+//        init(_ heap: Heap) {
+//            self.heap = heap
+//        }
+//
+//        mutating func next() -> UnsafeMutablePointer<Element>? {
+//            return heap.extractMin()
+//        }
+//    }
+//}

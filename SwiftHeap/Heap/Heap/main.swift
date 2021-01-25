@@ -7,48 +7,46 @@
 
 import Foundation
 
-var unsorted = [9, 8, 7, 6, 5, 4, 3, 2, 1]
+var unsorted = "phnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdi".cString(using: .utf8)!
 
-var sorted = [Int]()
+var sorted = [CChar]()
 sorted.reserveCapacity(10000)
 
 let begin = clock()
 
-var heap = Heap<Int>()
+var heap = Heap<CChar>(minimumCapacity: 10000)
 
 for i in 0..<unsorted.count {
     heap.insert(&unsorted[i])
 }
 
-for charPointer in heap {
-    sorted.append(charPointer.pointee)
+heap.forEach { (pointer) in
+    sorted.append(pointer.pointee)
 }
 
 let end = clock()
 
 let timeSpent = end - begin
 
-heap.deinit()
-
 print("Swift: \(timeSpent)")
 
-print(sorted)
+//print(sorted)
 
 
 // MARK:- C code
 
 let compareCallback: HEAP_ELEM_COMP = {
-    let i1 = $0!.load(as: Int.self)
-    let i2 = $1!.load(as: Int.self)
+    let i1 = $0!.load(as: CChar.self)
+    let i2 = $1!.load(as: CChar.self)
     return i1 == i2 ? 0 : i1 < i2 ? -1 : 1
 }
 
 let printCallback: HEAP_ELEM_PRINT = {
-    let i1 = $0!.load(as: Int.self)
+    let i1 = $0!.load(as: CChar.self)
     print(i1)
 }
 
-var result = Array<Int>()
+var result = Array<CChar>()
 result.reserveCapacity(10000)
 
 let begin2 = clock()
@@ -62,7 +60,7 @@ for i in 0..<unsorted.count {
 let min = UnsafeMutablePointer<UnsafeMutableRawPointer?>.allocate(capacity: 1)
 
 while (heap_extract_min(min)) {
-    result.append(min.pointee!.load(as: Int.self))
+    result.append(min.pointee!.load(as: CChar.self))
 }
 
 heap_destroy()
@@ -73,4 +71,5 @@ let timeSpent2 = end2 - begin2
 
 print("C: \(timeSpent2)")
 
-print(result)
+print(result == sorted)
+print(result.count == sorted.count)
