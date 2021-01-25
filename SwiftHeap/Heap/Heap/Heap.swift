@@ -11,12 +11,13 @@ struct Heap<Element: Comparable> {
     private(set) var count = 0
     private(set) var capacity: Int
     
-    init(capacity: Int = 10000) {
+    init(capacity: Int = 1) {
         self.capacity = capacity
         elements = UnsafeMutablePointer<UnsafeMutablePointer<Element>>.allocate(capacity: capacity)
     }
 
     mutating func insert(_ newElement: UnsafeMutablePointer<Element>) {
+        if count == capacity { expand() }
         elements[count] = newElement
         swim(startIndex: count)
         count += 1
@@ -25,18 +26,12 @@ struct Heap<Element: Comparable> {
     private mutating func extractMin() -> UnsafeMutablePointer<Element>? {
         guard count > 0 else { return nil }
         defer {
+            if (count == (capacity >> 2)) { shrink() }
             count -= 1
             elements[0] = elements[count]
             sink(startIndex: 0)
         }
         return elements[0]
-    }
-    
-    func swapAt(_ i1: Int, _ i2: Int)
-    {
-        let temp = elements[i1]
-        elements[i1] = elements[i2]
-        elements[i2] = temp
     }
     
     private mutating func swim(startIndex: Int) {
@@ -66,6 +61,28 @@ struct Heap<Element: Comparable> {
             swapAt(leftChildIdx, startIndex)
             sink(startIndex: leftChildIdx)
         }
+    }
+    
+    private mutating func expand() {
+        capacity &<<= 1
+        let stride = MemoryLayout<UnsafeMutablePointer<UnsafeMutablePointer<Element>>>.stride
+        let size = stride * capacity
+        elements = unsafeBitCast(realloc(elements, size), to: UnsafeMutablePointer<UnsafeMutablePointer<Element>>.self)
+    }
+    
+    private mutating func shrink() {
+        capacity &>>= 1
+        let stride = MemoryLayout<UnsafeMutablePointer<UnsafeMutablePointer<Element>>>.stride
+        let size = stride * capacity
+        elements = unsafeBitCast(realloc(elements, size), to: UnsafeMutablePointer<UnsafeMutablePointer<Element>>.self)
+    }
+    
+    @inline(__always)
+    private func swapAt(_ i1: Int, _ i2: Int)
+    {
+        let temp = elements[i1]
+        elements[i1] = elements[i2]
+        elements[i2] = temp
     }
     
     func `deinit`() {

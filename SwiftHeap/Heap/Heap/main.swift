@@ -14,7 +14,7 @@ sorted.reserveCapacity(10000)
 
 let begin = clock()
 
-var heap = Heap<Int>(capacity: unsorted.count)
+var heap = Heap<Int>()
 
 for i in 0..<unsorted.count {
     heap.insert(&unsorted[i])
@@ -28,11 +28,12 @@ let end = clock()
 
 let timeSpent = end - begin
 
+heap.deinit()
+
 print("Swift: \(timeSpent)")
 
 print(sorted)
 
-heap.deinit()
 
 // MARK:- C code
 

@@ -82,6 +82,8 @@ extern void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print)
         printf(MSG_NOT_ENOUGH_MEMORY);
         exit(EXIT_FAILURE);
     }
+    capacity = INITIAL_CAPACITY;
+    count = 0;
     cmp = comp;
     print_element = print;
 }
@@ -90,8 +92,6 @@ extern void heap_destroy(void)
 {
     free(elements);
     elements = NULL;
-    capacity = INITIAL_CAPACITY;
-    count = 0;
 }
 
 extern void heap_insert(void *element)
