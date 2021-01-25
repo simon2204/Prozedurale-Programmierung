@@ -7,13 +7,13 @@
 import Foundation
 
 struct Heap<Element: Comparable> {
-    private var elements: UnsafeMutableBufferPointer<UnsafeMutablePointer<Element>>
+    private var elements: UnsafeMutablePointer<UnsafeMutablePointer<Element>>
     private(set) var count = 0
     private(set) var capacity: Int
     
     init(capacity: Int = 10000) {
         self.capacity = capacity
-        elements = UnsafeMutableBufferPointer<UnsafeMutablePointer<Element>>.allocate(capacity: capacity)
+        elements = UnsafeMutablePointer<UnsafeMutablePointer<Element>>.allocate(capacity: capacity)
     }
 
     mutating func insert(_ newElement: UnsafeMutablePointer<Element>) {
@@ -32,11 +32,18 @@ struct Heap<Element: Comparable> {
         return elements[0]
     }
     
+    func swapAt(_ i1: Int, _ i2: Int)
+    {
+        let temp = elements[i1]
+        elements[i1] = elements[i2]
+        elements[i2] = temp
+    }
+    
     private mutating func swim(startIndex: Int) {
         if startIndex == 0 { return }
         let parentIdx = (startIndex - 1) / 2
         if elements[startIndex].pointee < elements[parentIdx].pointee {
-            elements.swapAt(startIndex, parentIdx)
+            swapAt(startIndex, parentIdx)
             swim(startIndex: parentIdx)
         }
     }
@@ -48,15 +55,15 @@ struct Heap<Element: Comparable> {
             let leftChild = elements[leftChildIdx].pointee
             let rightChild = elements[rightChildIdx].pointee
             if leftChild < rightChild && leftChild < elements[startIndex].pointee {
-                elements.swapAt(leftChildIdx, startIndex)
+                swapAt(leftChildIdx, startIndex)
                 sink(startIndex: leftChildIdx)
             } else if rightChild < elements[startIndex].pointee {
-                elements.swapAt(rightChildIdx, startIndex)
+                swapAt(rightChildIdx, startIndex)
                 sink(startIndex: rightChildIdx)
             }
         } else if leftChildIdx < count
                     && elements[leftChildIdx].pointee < elements[startIndex].pointee {
-            elements.swapAt(leftChildIdx, startIndex)
+            swapAt(leftChildIdx, startIndex)
             sink(startIndex: leftChildIdx)
         }
     }
