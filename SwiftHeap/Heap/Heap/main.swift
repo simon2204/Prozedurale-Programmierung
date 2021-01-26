@@ -7,14 +7,14 @@
 
 import Foundation
 
-var unsorted = "phnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdiphnjabcgdi".cString(using: .utf8)!
+var unsorted = "phnjabcgdi".cString(using: .utf8)!
 
 var sorted = [CChar]()
 sorted.reserveCapacity(10000)
 
 let begin = clock()
 
-var heap = Heap<CChar>(minimumCapacity: 10000)
+var heap = UnsafeHeap<CChar>()
 
 for i in 0..<unsorted.count {
     heap.insert(&unsorted[i])
@@ -24,13 +24,13 @@ heap.forEach { (pointer) in
     sorted.append(pointer.pointee)
 }
 
+heap.deinit()
+
 let end = clock()
 
 let timeSpent = end - begin
 
 print("Swift: \(timeSpent)")
-
-//print(sorted)
 
 
 // MARK:- C code
@@ -43,7 +43,7 @@ let compareCallback: HEAP_ELEM_COMP = {
 
 let printCallback: HEAP_ELEM_PRINT = {
     let i1 = $0!.load(as: CChar.self)
-    print(i1)
+    print(i1, terminator: "")
 }
 
 var result = Array<CChar>()
@@ -56,6 +56,8 @@ heap_init(compareCallback, printCallback)
 for i in 0..<unsorted.count {
     heap_insert(&unsorted[i])
 }
+
+//heap_print();
 
 let min = UnsafeMutablePointer<UnsafeMutableRawPointer?>.allocate(capacity: 1)
 
@@ -71,5 +73,3 @@ let timeSpent2 = end2 - begin2
 
 print("C: \(timeSpent2)")
 
-print(result == sorted)
-print(result.count == sorted.count)

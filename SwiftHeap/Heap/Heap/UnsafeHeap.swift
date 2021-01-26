@@ -1,12 +1,12 @@
 //
-//  Heap.swift
-//  Heap
+//  UnsafeHeap.swift
+//  UnsafeHeap
 //
 //  Created by Simon Schöpke on 24.01.21.
 //
 import Foundation
 
-struct Heap<Element: Comparable> {
+struct UnsafeHeap<Element: Comparable> {
     private var elements: UnsafeMutablePointer<UnsafeMutablePointer<Element>>
     private(set) var count = 0
     private(set) var capacity: Int
@@ -23,7 +23,7 @@ struct Heap<Element: Comparable> {
         count += 1
     }
 
-    private mutating func extractMin() -> UnsafeMutablePointer<Element>? {
+    mutating func extractMin() -> UnsafeMutablePointer<Element>? {
         guard count > 0 else { return nil }
         defer {
             if (count == (capacity &>> 2)) { shrink() }
@@ -38,7 +38,6 @@ struct Heap<Element: Comparable> {
         while let pointer = extractMin() {
             element(pointer)
         }
-        elements.deallocate()
     }
     
     private mutating func swim(startIndex: Int) {
@@ -92,29 +91,7 @@ struct Heap<Element: Comparable> {
         elements[i2] = temp
     }
     
-//    private func `deinit`() {
-//        elements.deallocate()
-//    }
+    func `deinit`() {
+        elements.deallocate()
+    }
 }
-
-
-//extension Heap: Sequence {
-//    func makeIterator() -> HeapIterator {
-//        return HeapIterator(self)
-//    }
-//}
-//
-//
-//extension Heap {
-//    struct HeapIterator: IteratorProtocol {
-//        private var heap: Heap
-//
-//        init(_ heap: Heap) {
-//            self.heap = heap
-//        }
-//
-//        mutating func next() -> UnsafeMutablePointer<Element>? {
-//            return heap.extractMin()
-//        }
-//    }
-//}

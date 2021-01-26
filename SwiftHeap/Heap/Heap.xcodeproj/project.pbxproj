@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		17C5700525BD98C200386D49 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C5700425BD98C200386D49 /* main.swift */; };
-		F4C88E1725BDF01C00AA0A8A /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C88E1625BDF01C00AA0A8A /* Heap.swift */; };
+		F4C88E1725BDF01C00AA0A8A /* UnsafeHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C88E1625BDF01C00AA0A8A /* UnsafeHeap.swift */; };
 		F4DD787125BDA21100D53629 /* binary_heap.c in Sources */ = {isa = PBXBuildFile; fileRef = F4DD787025BDA21100D53629 /* binary_heap.c */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +27,7 @@
 /* Begin PBXFileReference section */
 		17C5700125BD98C200386D49 /* Heap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Heap; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C5700425BD98C200386D49 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		F4C88E1625BDF01C00AA0A8A /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
+		F4C88E1625BDF01C00AA0A8A /* UnsafeHeap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsafeHeap.swift; sourceTree = "<group>"; };
 		F4DD786E25BDA21000D53629 /* Heap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Heap-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4DD786F25BDA21100D53629 /* binary_heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = binary_heap.h; sourceTree = "<group>"; };
 		F4DD787025BDA21100D53629 /* binary_heap.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = binary_heap.c; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				17C5700425BD98C200386D49 /* main.swift */,
-				F4C88E1625BDF01C00AA0A8A /* Heap.swift */,
+				F4C88E1625BDF01C00AA0A8A /* UnsafeHeap.swift */,
 				F4DD786F25BDA21100D53629 /* binary_heap.h */,
 				F4DD787025BDA21100D53629 /* binary_heap.c */,
 				F4DD786E25BDA21000D53629 /* Heap-Bridging-Header.h */,
@@ -131,7 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4DD787125BDA21100D53629 /* binary_heap.c in Sources */,
-				F4C88E1725BDF01C00AA0A8A /* Heap.swift in Sources */,
+				F4C88E1725BDF01C00AA0A8A /* UnsafeHeap.swift in Sources */,
 				17C5700525BD98C200386D49 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

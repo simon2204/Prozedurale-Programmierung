@@ -51,6 +51,8 @@ static void heap_swim(int start_idx);
 
 static void heap_sink(int start_idx);
 
+static void recusive_print(unsigned int wurzel, unsigned int depth);
+
 /* ============================================================================
  * Globale Variablen
  * ========================================================================= */
@@ -60,15 +62,6 @@ static unsigned int count = 0;
 static void **elements;
 static HEAP_ELEM_COMP cmp;
 static HEAP_ELEM_PRINT print_element;
-
-static void *parent;
-static void *child;
-static void *left_child;
-static void *right_child;
-static unsigned int parent_idx;
-static unsigned int child_idx;
-static unsigned int left_child_idx;
-static unsigned int right_child_idx;
 
 /* ============================================================================
  * Funktionsdefinitionen
@@ -126,6 +119,10 @@ extern bool heap_extract_min(void **min_element)
 
 static void heap_swim(int start_idx)
 {
+    static void *child;
+    static unsigned int parent_idx;
+    static unsigned int child_idx;
+    
     if (IS_ROOT(start_idx))
     {
         return;
@@ -144,10 +141,12 @@ static void heap_swim(int start_idx)
 
 static void heap_sink(int start_idx)
 {
-    parent = elements[start_idx];
-    parent_idx = start_idx;
-    left_child_idx = LEFT_CHILD_INDEX(parent_idx);
-    right_child_idx = RIGHT_CHILD_INDEX(parent_idx);
+    void *left_child;
+    void *right_child;
+    void *parent = elements[start_idx];
+    unsigned int parent_idx = start_idx;
+    unsigned int left_child_idx = LEFT_CHILD_INDEX(parent_idx);
+    unsigned int right_child_idx = RIGHT_CHILD_INDEX(parent_idx);
     
     // Wenn es ein rechtes Kind gibt, dann gibt es auch ein linkes.
     if (HAS_RIGHT_CHILD(right_child_idx))
@@ -199,5 +198,31 @@ static void heap_shrink(void)
 
 extern void heap_print(void)
 {
-    printf("heap_print is not yet implemented");
+    recusive_print(0, 0);
 }
+
+static void recusive_print(unsigned int wurzel, unsigned int depth)
+{
+    int i;
+    unsigned int left_child_index = LEFT_CHILD_INDEX(wurzel);
+    unsigned int right_child_index = RIGHT_CHILD_INDEX(wurzel);
+    
+    for (i = 0; i < depth; i++)
+    {
+        printf("\t");
+    }
+    
+    printf("|-- ");
+    print_element(elements[wurzel]);
+    printf("\n");
+    
+    if (HAS_LEFT_CHILD(left_child_index))
+    {
+        recusive_print(left_child_index, depth + 1);
+    }
+    if (HAS_RIGHT_CHILD(right_child_index))
+    {
+        recusive_print(right_child_index, depth + 1);
+    }
+}
+
