@@ -29,6 +29,7 @@
 #define SWAP_ELEMENTS(IDX1, IDX2) {void *temp = elements[IDX1]; elements[IDX1] = elements[IDX2]; elements[IDX2] = temp;}
 
 #define ARE_IN_INCREASING_ORDER(FIRST, SECOND) (cmp(FIRST, SECOND) == -1)
+//#define ARE_IN_INCREASING_ORDER(FIRST, SECOND) (*(char*) FIRST < *(char*) SECOND)
 
 #define IS_ROOT(INDEX) (INDEX == 0)
 
@@ -57,8 +58,8 @@ static void recusive_print(unsigned int wurzel, unsigned int depth);
  * Globale Variablen
  * ========================================================================= */
 
-static unsigned int capacity;
-static unsigned int count;
+static unsigned int capacity = INITIAL_CAPACITY;
+static unsigned int count = 0;
 static void **elements;
 static HEAP_ELEM_COMP cmp;
 static HEAP_ELEM_PRINT print_element;
@@ -69,8 +70,6 @@ static HEAP_ELEM_PRINT print_element;
 
 extern void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print)
 {
-    capacity = INITIAL_CAPACITY;
-    count = 0;
     elements = malloc(INITIAL_CAPACITY * sizeof(void *));
     if (elements == NULL)
     {
@@ -85,6 +84,8 @@ extern void heap_destroy(void)
 {
     free(elements);
     elements = NULL;
+    capacity = INITIAL_CAPACITY;
+    count = 0;
 }
 
 extern void heap_insert(void *element)
@@ -119,9 +120,9 @@ extern bool heap_extract_min(void **min_element)
 
 static void heap_swim(int start_idx)
 {
-    static void *child;
-    static unsigned int parent_idx;
-    static unsigned int child_idx;
+    void *child;
+    unsigned int parent_idx;
+    unsigned int child_idx;
     
     if (IS_ROOT(start_idx))
     {

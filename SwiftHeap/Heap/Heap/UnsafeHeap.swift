@@ -7,14 +7,9 @@
 import Foundation
 
 struct UnsafeHeap<Element: Comparable> {
-    private var elements: UnsafeMutablePointer<UnsafeMutablePointer<Element>>
+    private var elements = UnsafeMutablePointer<UnsafeMutablePointer<Element>>.allocate(capacity: 1)
     private(set) var count = 0
-    private(set) var capacity: Int
-    
-    init(minimumCapacity: Int = 1) {
-        self.capacity = minimumCapacity
-        elements = UnsafeMutablePointer<UnsafeMutablePointer<Element>>.allocate(capacity: minimumCapacity)
-    }
+    private(set) var capacity: Int = 1
 
     mutating func insert(_ newElement: UnsafeMutablePointer<Element>) {
         if count == capacity { expand() }
@@ -83,7 +78,6 @@ struct UnsafeHeap<Element: Comparable> {
         elements = unsafeBitCast(realloc(elements, size), to: UnsafeMutablePointer<UnsafeMutablePointer<Element>>.self)
     }
     
-    @inline(__always)
     private func swapAt(_ i1: Int, _ i2: Int)
     {
         let temp = elements[i1]

@@ -28,7 +28,7 @@
 
 #define SWAP_ELEMENTS(IDX1, IDX2) {void *temp = elements[IDX1]; elements[IDX1] = elements[IDX2]; elements[IDX2] = temp;}
 
-#define ARE_IN_INCREASING_ORDER(FIRST, SECOND) (cmp(FIRST, SECOND) == -1)
+#define ARE_IN_INCREASING_ORDER(FIRST, SECOND) (*((char *) FIRST) < *((char *) SECOND))
 
 #define IS_ROOT(INDEX) (INDEX == 0)
 
@@ -119,9 +119,9 @@ extern bool heap_extract_min(void **min_element)
 
 static void heap_swim(int start_idx)
 {
-    static void *child;
-    static unsigned int parent_idx;
-    static unsigned int child_idx;
+    void *child;
+    unsigned int parent_idx;
+    unsigned int child_idx;
     
     if (IS_ROOT(start_idx))
     {

@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		170BE57425BAFDD40051E153 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 170BE57325BAFDD40051E153 /* main.c */; };
-		170BE57D25BAFE290051E153 /* binary_heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 170BE57C25BAFE290051E153 /* binary_heap.c */; };
+		F4AE0AC525C22795000CE951 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = F4AE0AC425C22795000CE951 /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		170BE56E25BAFDD40051E153 /* CopyFiles */ = {
+		F4AE0ABF25C22795000CE951 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -24,14 +23,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		170BE57025BAFDD40051E153 /* Heap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Heap; sourceTree = BUILT_PRODUCTS_DIR; };
-		170BE57325BAFDD40051E153 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		170BE57B25BAFE290051E153 /* binary_heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = binary_heap.h; sourceTree = "<group>"; };
-		170BE57C25BAFE290051E153 /* binary_heap.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = binary_heap.c; sourceTree = "<group>"; };
+		F4AE0AC125C22795000CE951 /* Weitere Sprachelemente */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Weitere Sprachelemente"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4AE0AC425C22795000CE951 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		170BE56D25BAFDD40051E153 /* Frameworks */ = {
+		F4AE0ABE25C22795000CE951 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,66 +38,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		170BE56725BAFDD40051E153 = {
+		F4AE0AB825C22795000CE951 = {
 			isa = PBXGroup;
 			children = (
-				170BE57225BAFDD40051E153 /* Heap */,
-				170BE57125BAFDD40051E153 /* Products */,
+				F4AE0AC325C22795000CE951 /* Weitere Sprachelemente */,
+				F4AE0AC225C22795000CE951 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		170BE57125BAFDD40051E153 /* Products */ = {
+		F4AE0AC225C22795000CE951 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				170BE57025BAFDD40051E153 /* Heap */,
+				F4AE0AC125C22795000CE951 /* Weitere Sprachelemente */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		170BE57225BAFDD40051E153 /* Heap */ = {
+		F4AE0AC325C22795000CE951 /* Weitere Sprachelemente */ = {
 			isa = PBXGroup;
 			children = (
-				170BE57325BAFDD40051E153 /* main.c */,
-				170BE57B25BAFE290051E153 /* binary_heap.h */,
-				170BE57C25BAFE290051E153 /* binary_heap.c */,
+				F4AE0AC425C22795000CE951 /* main.c */,
 			);
-			path = Heap;
+			path = "Weitere Sprachelemente";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		170BE56F25BAFDD40051E153 /* Heap */ = {
+		F4AE0AC025C22795000CE951 /* Weitere Sprachelemente */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 170BE57725BAFDD40051E153 /* Build configuration list for PBXNativeTarget "Heap" */;
+			buildConfigurationList = F4AE0AC825C22795000CE951 /* Build configuration list for PBXNativeTarget "Weitere Sprachelemente" */;
 			buildPhases = (
-				170BE56C25BAFDD40051E153 /* Sources */,
-				170BE56D25BAFDD40051E153 /* Frameworks */,
-				170BE56E25BAFDD40051E153 /* CopyFiles */,
+				F4AE0ABD25C22795000CE951 /* Sources */,
+				F4AE0ABE25C22795000CE951 /* Frameworks */,
+				F4AE0ABF25C22795000CE951 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Heap;
-			productName = Heap;
-			productReference = 170BE57025BAFDD40051E153 /* Heap */;
+			name = "Weitere Sprachelemente";
+			productName = "Weitere Sprachelemente";
+			productReference = F4AE0AC125C22795000CE951 /* Weitere Sprachelemente */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		170BE56825BAFDD40051E153 /* Project object */ = {
+		F4AE0AB925C22795000CE951 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					170BE56F25BAFDD40051E153 = {
-						CreatedOnToolsVersion = 12.3;
+					F4AE0AC025C22795000CE951 = {
+						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
-			buildConfigurationList = 170BE56B25BAFDD40051E153 /* Build configuration list for PBXProject "Heap" */;
+			buildConfigurationList = F4AE0ABC25C22795000CE951 /* Build configuration list for PBXProject "Weitere Sprachelemente" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -108,30 +103,29 @@
 				en,
 				Base,
 			);
-			mainGroup = 170BE56725BAFDD40051E153;
-			productRefGroup = 170BE57125BAFDD40051E153 /* Products */;
+			mainGroup = F4AE0AB825C22795000CE951;
+			productRefGroup = F4AE0AC225C22795000CE951 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				170BE56F25BAFDD40051E153 /* Heap */,
+				F4AE0AC025C22795000CE951 /* Weitere Sprachelemente */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		170BE56C25BAFDD40051E153 /* Sources */ = {
+		F4AE0ABD25C22795000CE951 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				170BE57D25BAFE290051E153 /* binary_heap.c in Sources */,
-				170BE57425BAFDD40051E153 /* main.c in Sources */,
+				F4AE0AC525C22795000CE951 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		170BE57525BAFDD40051E153 /* Debug */ = {
+		F4AE0AC625C22795000CE951 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -190,7 +184,7 @@
 			};
 			name = Debug;
 		};
-		170BE57625BAFDD40051E153 /* Release */ = {
+		F4AE0AC725C22795000CE951 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -229,7 +223,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -243,7 +236,7 @@
 			};
 			name = Release;
 		};
-		170BE57825BAFDD40051E153 /* Debug */ = {
+		F4AE0AC925C22795000CE951 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -253,7 +246,7 @@
 			};
 			name = Debug;
 		};
-		170BE57925BAFDD40051E153 /* Release */ = {
+		F4AE0ACA25C22795000CE951 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -266,25 +259,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		170BE56B25BAFDD40051E153 /* Build configuration list for PBXProject "Heap" */ = {
+		F4AE0ABC25C22795000CE951 /* Build configuration list for PBXProject "Weitere Sprachelemente" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				170BE57525BAFDD40051E153 /* Debug */,
-				170BE57625BAFDD40051E153 /* Release */,
+				F4AE0AC625C22795000CE951 /* Debug */,
+				F4AE0AC725C22795000CE951 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		170BE57725BAFDD40051E153 /* Build configuration list for PBXNativeTarget "Heap" */ = {
+		F4AE0AC825C22795000CE951 /* Build configuration list for PBXNativeTarget "Weitere Sprachelemente" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				170BE57825BAFDD40051E153 /* Debug */,
-				170BE57925BAFDD40051E153 /* Release */,
+				F4AE0AC925C22795000CE951 /* Debug */,
+				F4AE0ACA25C22795000CE951 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 170BE56825BAFDD40051E153 /* Project object */;
+	rootObject = F4AE0AB925C22795000CE951 /* Project object */;
 }
