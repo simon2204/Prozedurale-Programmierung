@@ -1,7 +1,7 @@
 /**
  * @file
  * Dieses Modul definiert Knoten von Binärbäumen und stellt Funktionen
- * darauf zur Verfügung.
+ * darauf zur VerfŸgung.
  *
  * @author  Ulrike Griefahn
  * @date    2019-09-09
@@ -24,15 +24,27 @@
  * ======================================================================== */
 
 typedef struct _BTREE_NODE {
-    
+    void *value;
+    struct _BTREE_NODE *left_child;
+    struct _BTREE_NODE *right_child;
 } BTREE_NODE;
+
+/**
+ * Typdefinition fŸr Funktionen, mit denen Knoteninhalte gelšscht werden kšnnen.
+ */
+typedef void (*DESTROY_DATA_FCT)(void *);
+
+/**
+ * Typdefinition fŸr Funktionen, mit denen Knoteninhalte angezeigt werden kšnnen.
+ */
+typedef void (*PRINT_DATA_FCT)(void *);
 
 /* ===========================================================================
  * Funktionsprototypen
  * ======================================================================== */
 
 /**
- * Erzeugt einen neuen Knoten mit den übergebenen Daten. Der neue Knoten hat 
+ * Erzeugt einen neuen Knoten mit den Ÿbergebenen Daten. Der neue Knoten hat
  * keine Nachfolger.
  *
  * @param data      Daten des neuen Knotens
@@ -43,15 +55,15 @@ extern BTREE_NODE *btreenode_new(void *data);
 /**
  * Erzeugt eine Kopie (deep copy) des Knotens und seiner direkten und 
  * indirekten Nachfolger. Die Daten in den Knoten werden nicht kopiert, 
- * sondern nur ihre Referenz in die neuen Knoten übernommen.
+ * sondern nur ihre Referenz in die neuen Knoten Ÿbernommen.
  * 
  * @param node  Knoten, ab dem kopiert werden soll
- * @return      Die neu erzeugte Kopie des übergebenen Knotens
+ * @return      Die neu erzeugte Kopie des Ÿbergebenen Knotens
  */
 extern BTREE_NODE *btreenode_clone(BTREE_NODE *node);
 
 /**
- * Liefert true, wenn die beiden übergebenen Knoten dieselben Daten beinhalten
+ * Liefert true, wenn die beiden Ÿbergebenen Knoten dieselben Daten beinhalten
  * und ihre Nachfolgerknoten ebenfalls gleich sind (bzgl. dieser Funktion).
  * 
  * @param node1     der erste zu vergleichende Knoten
@@ -61,56 +73,56 @@ extern BTREE_NODE *btreenode_clone(BTREE_NODE *node);
 extern bool btreenode_equals(BTREE_NODE *node1, BTREE_NODE *node2);
 
 /**
- * Löscht den übergebenen Knoten und alle seine direkten und indirekten
- * Nachfolger. Im Parameter destroy_data kann eine Funktion übergeben werden,
- * mit der die Daten der Knoten gelöscht werden. Die Daten werden nicht
- * gelöscht, wenn in diesem Parameter NULL übergeben wird.
+ * Lšscht den Ÿbergebenen Knoten und alle seine direkten und indirekten
+ * Nachfolger. Im Parameter destroy_data kann eine Funktion Ÿbergeben werden,
+ * mit der die Daten der Knoten gelšscht werden. Die Daten werden nicht
+ * gelšscht, wenn in diesem Parameter NULL Ÿbergeben wird.
  *
- * @param node          Der zu löschende Knoten
- * @param destroy_data  Funktion zum Löschen der Daten, NULL sonst
+ * @param node          Der zu lšschende Knoten
+ * @param destroy_data  Funktion zum Lšschen der Daten, NULL sonst
  */
 extern void btreenode_destroy(BTREE_NODE **node, 
                               DESTROY_DATA_FCT destroy_data);
 
 /**
  * Liefert die Daten des Knotens.
- * 
+ *
  * @param node      Knoten, dessen Daten geliefert werden sollen
  * @return          Daten des Knoten oder NULL, wenn der Knoten keine Daten hat
- *                  oder kein Knoten übergeben wurde.
+ *                  oder kein Knoten Ÿbergeben wurde.
  */
 extern void *btreenode_get_data(BTREE_NODE *node);
 
 /**
  * Liefert den linken Nachfolger des Knotens.
- * 
+ *
  * @param node      Knoten, dessen linker Nachfolger geliefert werden soll
  * @return          linker Nachfolger des Knotens oder NULL, wenn der Knoten
- *                  keinen linken Nachfolger hat oder kein Knoten übergeben
+ *                  keinen linken Nachfolger hat oder kein Knoten Ÿbergeben
  *                  wurde
  */
 extern BTREE_NODE *btreenode_get_left(BTREE_NODE *node);
 
 /**
  * Liefert den rechten Nachfolger des Knotens.
- * 
+ *
  * @param node      Knoten, dessen rechter Nachfolger geliefert werden soll
  * @return          rechter Nachfolger des Knotens oder NULL, wenn der Knoten
  *                  keinen rechten Nachfolger hat oder kein Knoten 
- *                  übergeben wurde
+ *                  Ÿbergeben wurde
  */
 extern BTREE_NODE *btreenode_get_right(BTREE_NODE *node);
 
 /**
- * Prüft, ob der übergebene Knoten ein Blatt ist.
+ * PrŸft, ob der Ÿbergebene Knoten ein Blatt ist.
  *
- * @param node      Knoten, der geprüft werden soll
+ * @param node      Knoten, der geprŸft werden soll
  * @return          Liefert true, wenn der Knoten ein Blatt ist, false sonst
  */
 extern bool btreenode_is_leaf(BTREE_NODE *node);
 
 /**
- * Fügt einen Knoten als linken Nachfolger an einen Elternknoten an, falls 
+ * FŸgt einen Knoten als linken Nachfolger an einen Elternknoten an, falls
  * dieser Knoten noch keinen linken Nachfolger hat.
  *
  * @param parent_node   der Elternknoten
@@ -121,7 +133,7 @@ extern bool btreenode_is_leaf(BTREE_NODE *node);
 extern bool btreenode_set_left(BTREE_NODE *parent_node, BTREE_NODE *node);
 
 /**
- * Fügt einen Knoten als rechten Nachfolger an einen anderen an, falls der 
+ * FŸgt einen Knoten als rechten Nachfolger an einen anderen an, falls der
  * Knoten noch keinen rechten Nachfolger hat.
  *
  * @param parent_node   der Elternknoten
@@ -134,7 +146,7 @@ extern bool btreenode_set_right(BTREE_NODE *parent_node, BTREE_NODE *node);
 /**
  * Gibt den Knoten auf dem Bildschirm aus.
  * Im zweiten Argument kann eine Funktion zum Ausgeben der im Knoten
- * enthaltenen Daten übergeben werden. Wird NULL übergeben, werden die Daten
+ * enthaltenen Daten Ÿbergeben werden. Wird NULL Ÿbergeben, werden die Daten
  * des Knotens nicht ausgegeben.
  *
  * @param node          der auszugebende Knoten
