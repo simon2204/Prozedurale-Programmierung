@@ -56,7 +56,7 @@ extern BTREE_NODE *btreenode_new(void *data);
  * Erzeugt eine Kopie (deep copy) des Knotens und seiner direkten und 
  * indirekten Nachfolger. Die Daten in den Knoten werden nicht kopiert, 
  * sondern nur ihre Referenz in die neuen Knoten Ÿbernommen.
- * 
+ *
  * @param node  Knoten, ab dem kopiert werden soll
  * @return      Die neu erzeugte Kopie des Ÿbergebenen Knotens
  */
@@ -65,7 +65,7 @@ extern BTREE_NODE *btreenode_clone(BTREE_NODE *node);
 /**
  * Liefert true, wenn die beiden Ÿbergebenen Knoten dieselben Daten beinhalten
  * und ihre Nachfolgerknoten ebenfalls gleich sind (bzgl. dieser Funktion).
- * 
+ *
  * @param node1     der erste zu vergleichende Knoten
  * @param node2     der zweite zu vergleichende Knoten
  * @return          true, wenn die beiden Knoten gleich sind, false sonst

@@ -33,7 +33,8 @@
 		171A91C025C04AE5006D9E70 /* btreenode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btreenode.h; sourceTree = "<group>"; };
 		171A91C125C04AE5006D9E70 /* frequency.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = frequency.c; sourceTree = "<group>"; };
 		171A91C225C04AE5006D9E70 /* frequency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frequency.h; sourceTree = "<group>"; };
-		17B3C5CD25C35149009BFCE0 /* btree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = btree.h; path = ../../../../.Trash/btree.h; sourceTree = "<group>"; };
+		17D7E6E825C4985B00561ABE /* btree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btree.h; sourceTree = "<group>"; };
+		17D7E6EA25C4A15B00561ABE /* binary_tree_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary_tree_common.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +67,9 @@
 		171A91AE25C042E2006D9E70 /* BinärBaum */ = {
 			isa = PBXGroup;
 			children = (
+				17D7E6EA25C4A15B00561ABE /* binary_tree_common.h */,
 				171A91AF25C042E2006D9E70 /* main.c */,
-				17B3C5CD25C35149009BFCE0 /* btree.h */,
+				17D7E6E825C4985B00561ABE /* btree.h */,
 				171A91B825C04317006D9E70 /* btree.c */,
 				171A91C025C04AE5006D9E70 /* btreenode.h */,
 				171A91BC25C04324006D9E70 /* btreenode.c */,

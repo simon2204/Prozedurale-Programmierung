@@ -1,7 +1,7 @@
 /**
- * @file Bin‰rbaum
+ * @file Binärbaum
  *
- * Dieses Modul testet die Datenstrukturen und Funktionen des Bin‰rbaums mit
+ * Dieses Modul testet die Datenstrukturen und Funktionen des Binärbaums mit
  * der Struktur frequency
  *
  * @author Ulrike Griefahn
@@ -31,7 +31,7 @@
  */
 int main(void)
 {
-    /* Erzeuge die Frequency-Daten f¸r die Knoten */
+    /* Erzeuge die Frequency-Daten für die Knoten */
     struct FREQUENCY *frequency1    = frequency_create("1",    1);
     struct FREQUENCY *frequency10   = frequency_create("10",   2);
     struct FREQUENCY *frequency11   = frequency_create("11",   3);
@@ -62,7 +62,7 @@ int main(void)
                       (DESTROY_DATA_FCT) frequency_destroy,
                       (PRINT_DATA_FCT) frequency_print);
     node = btree_get_root(tree1);
-    btreenode_set_left(node,  node100);
+    btreenode_set_left(node, node100);
     btree_print(tree1);
 
     /* Erzeuge einen Baum mit den Knoten 11, 110, 111, 1100, 1101 und 1110 */
@@ -79,7 +79,7 @@ int main(void)
     btreenode_set_left(node111, node1110);
     btree_print(tree2);
 
-    /* F¸ge die beiden B‰ume zu einem zusammen mit neuer Wurzel 1 */
+    /* Füge die beiden Bäume zu einem zusammen mit neuer Wurzel 1 */
     printf("Zusammengefuegte Binaerbaeume mit neuer Wurzel (1:1)\n\n");
     tree = btree_merge(tree1, tree2, frequency1);
     tree1 = NULL;
@@ -91,22 +91,22 @@ int main(void)
     cloned_tree = btree_clone(tree);
     btree_print(cloned_tree);
 
-    /* ƒndere einen der Datens‰tze, der in beiden B‰umen vorhanden ist.*/
+    /* Ändere einen der Datensätze, der in beiden Bäumen vorhanden ist.*/
     printf("Aenderung der Daten des Knotens [110:5] in [test:42]\n\n");
     frequency_set_word(frequency110, "test");
     frequency_set_count(frequency110, 42);
 
-    /* Pr¸fe, ob in beiden B‰umen jetzt 'test: 42' angezeigt wird. */
+    /* Prüfe, ob in beiden Bäumen jetzt 'test: 42' angezeigt wird. */
     printf("Ausgabe des Originalbaums und der Kopie\n\n");
     btree_print(tree);
     btree_print(cloned_tree);
 
-    /* Speicher f¸r beide B‰ume wieder freigeben. */
+    /* Speicher für beide Bäume wieder freigeben. */
     printf("Speicher des Originalsbaums und der Knoten freigeben, "
            "Daten nicht loeschen.\n\n");
     btree_destroy(&tree, false);
 
-    /* Anzeige der nach dem Lˆschen des Originals noch vorhandenen Kopie. */
+    /* Anzeige der nach dem Löschen des Originals noch vorhandenen Kopie. */
     printf("\nKopie anzeigen - ist noch vorhanden.\n");
     btree_print(cloned_tree);
     
