@@ -41,6 +41,7 @@ $(EXE) : $(SRC_FILES)
 # Erzeugung Doxygen Dokumentation
 $(DOXYGEN_FILE) : $(SRC_FILES)
 	$(DOXYGEN)
+	ln -s $(DOXYGEN_FILE) index.html
 
 # ----------------------------------------------------------------------------
 # Regel zum Loeschen aller erzeugten Dateien
@@ -51,6 +52,7 @@ clean :
 	rm -f $(EXE)
 	rm -f -r $(DOXYGEN_PATH)
 	rm -f $(ZIP_FILE)
+	rm -f index.html
 
 # ----------------------------------------------------------------------------
 # Regeln fuer die einzelnen Testfaelle

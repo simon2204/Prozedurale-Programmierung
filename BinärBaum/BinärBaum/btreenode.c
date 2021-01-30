@@ -5,13 +5,14 @@
 //  Created by Simon Schöpke on 26.01.21.
 //
 
-#include "btreenode.h"
 #include <stdlib.h>
+#include "btreenode.h"
+#include "binary_tree_common.h"
 
 extern BTREE_NODE *btreenode_new(void *data)
 {
     BTREE_NODE *btree_node = malloc(sizeof(BTREE_NODE));
-    // Ensure enough memory
+    ENSURE_ENOUGH_MEMORY(btree_node, "btreenode_new");
     btree_node->value = data;
     btree_node->left_child = NULL;
     btree_node->right_child = NULL;
@@ -20,19 +21,33 @@ extern BTREE_NODE *btreenode_new(void *data)
 
 extern BTREE_NODE *btreenode_clone(BTREE_NODE *node)
 {
-    return btreenode_new(node->value);
+    void *btreenode = NULL;
+    
+    if (node != NULL)
+    {
+        btreenode = btreenode_new(node->value);
+    }
+    
+    return btreenode;
 }
 
 extern bool btreenode_equals(BTREE_NODE *node1, BTREE_NODE *node2)
 {
     return node1 != NULL && node2 != NULL
-            && node1->value == node2->value;
+        && node1->value == node2->value;
 }
 
 extern void btreenode_destroy(BTREE_NODE **node,
                               DESTROY_DATA_FCT destroy_data)
 {
-    
+    if (node != NULL && *node != NULL)
+    {
+        if (destroy_data != NULL)
+        {
+            destroy_data(&(*node)->value);
+        }
+        FREE_NULL(*node);
+    }
 }
 
 extern void *btreenode_get_data(BTREE_NODE *node)
@@ -73,12 +88,15 @@ extern BTREE_NODE *btreenode_get_right(BTREE_NODE *node)
 
 extern bool btreenode_is_leaf(BTREE_NODE *node)
 {
-    return node->left_child == NULL && node->right_child == NULL;
+    return node != NULL
+    && node->left_child == NULL
+    && node->right_child == NULL;
 }
 
 extern bool btreenode_set_left(BTREE_NODE *parent_node, BTREE_NODE *node)
 {
-    bool can_set_left = parent_node != NULL && parent_node->left_child != NULL;
+    bool can_set_left = parent_node != NULL
+                    && parent_node->left_child == NULL;
     
     if (can_set_left)
     {
@@ -90,7 +108,8 @@ extern bool btreenode_set_left(BTREE_NODE *parent_node, BTREE_NODE *node)
 
 extern bool btreenode_set_right(BTREE_NODE *parent_node, BTREE_NODE *node)
 {
-    bool can_set_right = parent_node != NULL && parent_node->right_child != NULL;
+    bool can_set_right = parent_node != NULL
+                    && parent_node->right_child == NULL;
     
     if (can_set_right)
     {
@@ -102,5 +121,8 @@ extern bool btreenode_set_right(BTREE_NODE *parent_node, BTREE_NODE *node)
 
 extern void btreenode_print(BTREE_NODE *node, PRINT_DATA_FCT print_data)
 {
-    
+    if (node != NULL && print_data != NULL)
+    {
+        print_data(node->value);
+    }
 }

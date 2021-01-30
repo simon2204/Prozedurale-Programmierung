@@ -25,6 +25,11 @@
  * Funktionsdefinitionen
  * ======================================================================== */
 
+void printInt(int *data)
+{
+    printf("%d", *data);
+}
+
 /**
  * Testet Funktionen der Module btree und btreenode mit Daten auf Basis des
  * Moduls frequency. Die Testergebnisse werden auf dem Bildschirm ausgegeben.
@@ -109,9 +114,9 @@ int main(void)
     /* Anzeige der nach dem Löschen des Originals noch vorhandenen Kopie. */
     printf("\nKopie anzeigen - ist noch vorhanden.\n");
     btree_print(cloned_tree);
-    
+
     printf("\nSpeicher der Kopie, seiner Knoten und Daten freigeben.\n");
     btree_destroy(&cloned_tree, true);
-
+    
     return 0;
 }

@@ -15,8 +15,8 @@
  * Header-Dateien 
  * ======================================================================== */
 
-#include "btreenode.h"
 #include <stdbool.h>
+#include "btreenode.h"
 
 
 /* ===========================================================================
@@ -25,6 +25,8 @@
 
 typedef struct _BTREE {
     BTREE_NODE *root;
+    DESTROY_DATA_FCT destroy_data; /* Fkt. zum Lšschen der enthaltenen Daten */
+    PRINT_DATA_FCT print_data;     /* Fkt. zum Anzeigen der enthaltenen Daten */
 } BTREE;
 
 

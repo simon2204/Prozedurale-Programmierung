@@ -236,7 +236,7 @@ extern char *frequency_get_string(const struct FREQUENCY *p_frequency)
  * ------------------------------------------------------------------------ */
 extern void frequency_print(const struct FREQUENCY *p_frequency)
 {
-    if (p_frequency != NULL  && p_frequency->word != NULL)
+    if (p_frequency != NULL && p_frequency->word != NULL)
     {
         printf("[%s: %d]", p_frequency->word, p_frequency->count);
     }

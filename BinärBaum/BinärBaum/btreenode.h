@@ -1,6 +1,6 @@
 /**
  * @file
- * Dieses Modul definiert Knoten von Bin‰rb‰umen und stellt Funktionen
+ * Dieses Modul definiert Knoten von Binärbäumen und stellt Funktionen
  * darauf zur Verfügung.
  *
  * @author  Ulrike Griefahn
@@ -32,7 +32,7 @@ typedef struct _BTREE_NODE {
 /**
  * Typdefinition für Funktionen, mit denen Knoteninhalte gelöscht werden können.
  */
-typedef void (*DESTROY_DATA_FCT)(void *);
+typedef void (*DESTROY_DATA_FCT)(void **);
 
 /**
  * Typdefinition für Funktionen, mit denen Knoteninhalte angezeigt werden können.
