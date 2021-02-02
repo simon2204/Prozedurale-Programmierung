@@ -6,7 +6,7 @@ SRC_PATH = .
 SRC_FILES = $(SRC_PATH)/*.c $(SRC_PATH)/*.h
 
 # Compiler-Optionen
-GCC_OPTION = -O3
+GCC_OPTION = -Ofast
 
 # Konfiguration fuer Doxygen
 DOXYGEN      = doxygen ppr_doxygen.cfg

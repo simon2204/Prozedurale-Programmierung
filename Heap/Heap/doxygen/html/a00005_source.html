@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Project: binary_heap.h Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">My Project
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.8.20 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Suchen');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">binary_heap.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="a00005.html">gehe zur Dokumentation dieser Datei</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//  binary_heap.h</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//  Heap</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">//  Created by Simon Schöpke on 22.01.21.</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef binary_heap_h</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define binary_heap_h</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">/* ============================================================================</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * Typdefinitionen</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> * ========================================================================= */</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="a00005.html#ae4b299b1232c734958dc8edbffed3fb1">   19</a></span>&#160;<span class="keyword">typedef</span> int (*<a class="code" href="a00005.html#ae4b299b1232c734958dc8edbffed3fb1">HEAP_ELEM_COMP</a>) (<span class="keywordtype">void</span>* first_element, <span class="keywordtype">void</span>* second_element);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="a00005.html#af870c6ccac35b91165f9f249ca94c70c">   21</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="a00005.html#af870c6ccac35b91165f9f249ca94c70c">HEAP_ELEM_PRINT</a>) (<span class="keywordtype">void</span>* element);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">/* ============================================================================</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> * Funktionsprototypen</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> * ========================================================================= */</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="a00005.html#a73501d9fec3af4733fe63a8b261eddf9">heap_init</a>(<a class="code" href="a00005.html#ae4b299b1232c734958dc8edbffed3fb1">HEAP_ELEM_COMP</a> comp, <a class="code" href="a00005.html#af870c6ccac35b91165f9f249ca94c70c">HEAP_ELEM_PRINT</a> print);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="a00005.html#aa0ca586c20b4c127908a5258934f0c68">heap_destroy</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="a00005.html#a532c06eeef1ea18a1f0e5a33cfdb5715">heap_insert</a>(<span class="keywordtype">void</span> *element);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="a00005.html#a067229850f600a23a23cb9487a5a84b0">heap_extract_min</a>(<span class="keywordtype">void</span> **min_element);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="a00005.html#ae711d7cf7a596f9c8cda072759e90b9d">heap_print</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* min_heap_h */</span><span class="preprocessor"></span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aa00002_html_ac4ee5f50aa10892954f1cd41387fb836"><div class="ttname"><a href="a00002.html#ac4ee5f50aa10892954f1cd41387fb836">HAS_LEFT_CHILD</a></div><div class="ttdeci">#define HAS_LEFT_CHILD(INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:22</div></div>
+<div class="ttc" id="aa00002_html_a9c1ccffeee3b7cfcd2d327470127d8ad"><div class="ttname"><a href="a00002.html#a9c1ccffeee3b7cfcd2d327470127d8ad">heap_expand</a></div><div class="ttdeci">static void heap_expand(void)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:178</div></div>
+<div class="ttc" id="aa00002_html_aaf6a5e60c7a2472795c74e7b18b79a81"><div class="ttname"><a href="a00002.html#aaf6a5e60c7a2472795c74e7b18b79a81">LEFT_CHILD_INDEX</a></div><div class="ttdeci">#define LEFT_CHILD_INDEX(PARENT_INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:18</div></div>
+<div class="ttc" id="aa00002_html_aa72e50646014953ad12f01ac70d877ae"><div class="ttname"><a href="a00002.html#aa72e50646014953ad12f01ac70d877ae">ARE_IN_INCREASING_ORDER</a></div><div class="ttdeci">#define ARE_IN_INCREASING_ORDER(FIRST, SECOND)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:31</div></div>
+<div class="ttc" id="aa00002_html_a532c06eeef1ea18a1f0e5a33cfdb5715"><div class="ttname"><a href="a00002.html#a532c06eeef1ea18a1f0e5a33cfdb5715">heap_insert</a></div><div class="ttdeci">void heap_insert(void *element)</div><div class="ttdoc">Fügt ein neues Element in den Heap ein und sorgt dafür, dass die Heap-Eigenschaft aufrechterhalten bl...</div><div class="ttdef"><b>Definition:</b> binary_heap.c:91</div></div>
+<div class="ttc" id="aa00002_html_a9cf620031d99240c80ef54558e1cfdab"><div class="ttname"><a href="a00002.html#a9cf620031d99240c80ef54558e1cfdab">RIGHT_CHILD</a></div><div class="ttdeci">#define RIGHT_CHILD(INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:26</div></div>
+<div class="ttc" id="aa00002_html_ae711d7cf7a596f9c8cda072759e90b9d"><div class="ttname"><a href="a00002.html#ae711d7cf7a596f9c8cda072759e90b9d">heap_print</a></div><div class="ttdeci">void heap_print(void)</div><div class="ttdoc">Gibt den Heap auf dem Bildschirm aus.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:200</div></div>
+<div class="ttc" id="aa00002_html_a16ff2d8e15ade4948398b0aeb80124a8"><div class="ttname"><a href="a00002.html#a16ff2d8e15ade4948398b0aeb80124a8">count</a></div><div class="ttdeci">static unsigned int count</div><div class="ttdef"><b>Definition:</b> binary_heap.c:62</div></div>
+<div class="ttc" id="aa00002_html_a7aa127e39a7506f86d546c38fd4cecaa"><div class="ttname"><a href="a00002.html#a7aa127e39a7506f86d546c38fd4cecaa">PARENT_INDEX</a></div><div class="ttdeci">#define PARENT_INDEX(CHILD_INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:20</div></div>
+<div class="ttc" id="aa00002_html_a834fea256022dab56edb1baa719beccb"><div class="ttname"><a href="a00002.html#a834fea256022dab56edb1baa719beccb">heap_swim</a></div><div class="ttdeci">static void heap_swim(int start_idx)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:121</div></div>
+<div class="ttc" id="aa00005_html"><div class="ttname"><a href="a00005.html">binary_heap.h</a></div></div>
+<div class="ttc" id="aa00005_html_ae711d7cf7a596f9c8cda072759e90b9d"><div class="ttname"><a href="a00005.html#ae711d7cf7a596f9c8cda072759e90b9d">heap_print</a></div><div class="ttdeci">void heap_print(void)</div><div class="ttdoc">Gibt den Heap auf dem Bildschirm aus.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:200</div></div>
+<div class="ttc" id="aa00002_html_a5446a5bbb68bb93392b04dfbfa0095af"><div class="ttname"><a href="a00002.html#a5446a5bbb68bb93392b04dfbfa0095af">INITIAL_CAPACITY</a></div><div class="ttdeci">#define INITIAL_CAPACITY</div><div class="ttdef"><b>Definition:</b> binary_heap.c:40</div></div>
+<div class="ttc" id="aa00002_html_ad07dd4af6854ae9ed0504bf18b9fffb4"><div class="ttname"><a href="a00002.html#ad07dd4af6854ae9ed0504bf18b9fffb4">SWAP_ELEMENTS</a></div><div class="ttdeci">#define SWAP_ELEMENTS(IDX1, IDX2)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:29</div></div>
+<div class="ttc" id="aa00002_html_a73501d9fec3af4733fe63a8b261eddf9"><div class="ttname"><a href="a00002.html#a73501d9fec3af4733fe63a8b261eddf9">heap_init</a></div><div class="ttdeci">void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print)</div><div class="ttdoc">Initialisiert den Heap.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:71</div></div>
+<div class="ttc" id="aa00002_html_a067229850f600a23a23cb9487a5a84b0"><div class="ttname"><a href="a00002.html#a067229850f600a23a23cb9487a5a84b0">heap_extract_min</a></div><div class="ttdeci">bool heap_extract_min(void **min_element)</div><div class="ttdoc">Entfernt das kleinste Element aus dem Heap und liefert es im Parameter min_element zurück.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:102</div></div>
+<div class="ttc" id="aa00002_html_a524ccac3954ccb8de951fc1f7be4b00c"><div class="ttname"><a href="a00002.html#a524ccac3954ccb8de951fc1f7be4b00c">heap_shrink</a></div><div class="ttdeci">static void heap_shrink(void)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:189</div></div>
+<div class="ttc" id="aa00002_html_a98b1616ddec578a560ad503bba74c834"><div class="ttname"><a href="a00002.html#a98b1616ddec578a560ad503bba74c834">heap_sink</a></div><div class="ttdeci">static void heap_sink(int start_idx)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:143</div></div>
+<div class="ttc" id="aa00002_html_a0f3ab50c657818e92556935541fdb010"><div class="ttname"><a href="a00002.html#a0f3ab50c657818e92556935541fdb010">print_element</a></div><div class="ttdeci">static HEAP_ELEM_PRINT print_element</div><div class="ttdef"><b>Definition:</b> binary_heap.c:65</div></div>
+<div class="ttc" id="aa00002_html_a21e93dea02fd068ae122115cb7011502"><div class="ttname"><a href="a00002.html#a21e93dea02fd068ae122115cb7011502">capacity</a></div><div class="ttdeci">static unsigned int capacity</div><div class="ttdef"><b>Definition:</b> binary_heap.c:61</div></div>
+<div class="ttc" id="aa00002_html_a8271667e98e9f8531a9db198a77d8fe5"><div class="ttname"><a href="a00002.html#a8271667e98e9f8531a9db198a77d8fe5">RIGHT_CHILD_INDEX</a></div><div class="ttdeci">#define RIGHT_CHILD_INDEX(PARENT_INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:19</div></div>
+<div class="ttc" id="aa00005_html_a067229850f600a23a23cb9487a5a84b0"><div class="ttname"><a href="a00005.html#a067229850f600a23a23cb9487a5a84b0">heap_extract_min</a></div><div class="ttdeci">bool heap_extract_min(void **min_element)</div><div class="ttdoc">Entfernt das kleinste Element aus dem Heap und liefert es im Parameter min_element zurück.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:102</div></div>
+<div class="ttc" id="aa00002_html_a18793a1dec169212d4e277cf7e085a9d"><div class="ttname"><a href="a00002.html#a18793a1dec169212d4e277cf7e085a9d">HAS_RIGHT_CHILD</a></div><div class="ttdeci">#define HAS_RIGHT_CHILD(INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:23</div></div>
+<div class="ttc" id="aa00002_html_aa0ca586c20b4c127908a5258934f0c68"><div class="ttname"><a href="a00002.html#aa0ca586c20b4c127908a5258934f0c68">heap_destroy</a></div><div class="ttdeci">void heap_destroy(void)</div><div class="ttdoc">Löscht den Heap, d.h., sie gibt den Speicher frei.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:83</div></div>
+<div class="ttc" id="aa00005_html_af870c6ccac35b91165f9f249ca94c70c"><div class="ttname"><a href="a00005.html#af870c6ccac35b91165f9f249ca94c70c">HEAP_ELEM_PRINT</a></div><div class="ttdeci">void(* HEAP_ELEM_PRINT)(void *element)</div><div class="ttdef"><b>Definition:</b> binary_heap.h:21</div></div>
+<div class="ttc" id="aa00002_html_ac1e786e007a7eab82fd04bf2f1118302"><div class="ttname"><a href="a00002.html#ac1e786e007a7eab82fd04bf2f1118302">elements</a></div><div class="ttdeci">static void ** elements</div><div class="ttdef"><b>Definition:</b> binary_heap.c:63</div></div>
+<div class="ttc" id="aa00002_html_a34b43e8b5d9cc7fe4832fe318dc15a95"><div class="ttname"><a href="a00002.html#a34b43e8b5d9cc7fe4832fe318dc15a95">cmp</a></div><div class="ttdeci">static HEAP_ELEM_COMP cmp</div><div class="ttdef"><b>Definition:</b> binary_heap.c:64</div></div>
+<div class="ttc" id="aa00002_html_a1c862d5d53beb3f750527511b29ea248"><div class="ttname"><a href="a00002.html#a1c862d5d53beb3f750527511b29ea248">PARENT</a></div><div class="ttdeci">#define PARENT(INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:27</div></div>
+<div class="ttc" id="aa00005_html_ae4b299b1232c734958dc8edbffed3fb1"><div class="ttname"><a href="a00005.html#ae4b299b1232c734958dc8edbffed3fb1">HEAP_ELEM_COMP</a></div><div class="ttdeci">int(* HEAP_ELEM_COMP)(void *first_element, void *second_element)</div><div class="ttdef"><b>Definition:</b> binary_heap.h:19</div></div>
+<div class="ttc" id="aa00002_html_af076225696d595a2b4e34b2cf12c85d7"><div class="ttname"><a href="a00002.html#af076225696d595a2b4e34b2cf12c85d7">recusive_print</a></div><div class="ttdeci">static void recusive_print(unsigned int wurzel, unsigned int depth)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:205</div></div>
+<div class="ttc" id="aa00005_html_aa0ca586c20b4c127908a5258934f0c68"><div class="ttname"><a href="a00005.html#aa0ca586c20b4c127908a5258934f0c68">heap_destroy</a></div><div class="ttdeci">void heap_destroy(void)</div><div class="ttdoc">Löscht den Heap, d.h., sie gibt den Speicher frei.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:83</div></div>
+<div class="ttc" id="aa00005_html_a73501d9fec3af4733fe63a8b261eddf9"><div class="ttname"><a href="a00005.html#a73501d9fec3af4733fe63a8b261eddf9">heap_init</a></div><div class="ttdeci">void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print)</div><div class="ttdoc">Initialisiert den Heap.</div><div class="ttdef"><b>Definition:</b> binary_heap.c:71</div></div>
+<div class="ttc" id="aa00005_html_a532c06eeef1ea18a1f0e5a33cfdb5715"><div class="ttname"><a href="a00005.html#a532c06eeef1ea18a1f0e5a33cfdb5715">heap_insert</a></div><div class="ttdeci">void heap_insert(void *element)</div><div class="ttdoc">Fügt ein neues Element in den Heap ein und sorgt dafür, dass die Heap-Eigenschaft aufrechterhalten bl...</div><div class="ttdef"><b>Definition:</b> binary_heap.c:91</div></div>
+<div class="ttc" id="aa00002_html_ae2fd98b965c4a731e4dd523f175e44aa"><div class="ttname"><a href="a00002.html#ae2fd98b965c4a731e4dd523f175e44aa">MSG_NOT_ENOUGH_MEMORY</a></div><div class="ttdeci">#define MSG_NOT_ENOUGH_MEMORY</div><div class="ttdef"><b>Definition:</b> binary_heap.c:41</div></div>
+<div class="ttc" id="aa00002_html_acf0b180bd73316d73ceb96aaabcbb726"><div class="ttname"><a href="a00002.html#acf0b180bd73316d73ceb96aaabcbb726">IS_ROOT</a></div><div class="ttdeci">#define IS_ROOT(INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:34</div></div>
+<div class="ttc" id="aa00002_html_a95d6d14f83e12d54ecb33453ce312962"><div class="ttname"><a href="a00002.html#a95d6d14f83e12d54ecb33453ce312962">LEFT_CHILD</a></div><div class="ttdeci">#define LEFT_CHILD(INDEX)</div><div class="ttdef"><b>Definition:</b> binary_heap.c:25</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Erzeugt am Son Jan 31 2021 00:30:02 für My Project von&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+</small></address>
+</body>
+</html>
