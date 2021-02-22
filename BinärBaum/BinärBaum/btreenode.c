@@ -9,6 +9,9 @@
 #include "btreenode.h"
 #include "binary_tree_common.h"
 
+static void btreenode_clone_recursive(BTREE_NODE *node1, BTREE_NODE *node2);
+static void btreenode_print_preoder(BTREE_NODE *node, PRINT_DATA_FCT print_data, unsigned int depth);
+
 extern BTREE_NODE *btreenode_new(void *data)
 {
     BTREE_NODE *btree_node = malloc(sizeof(BTREE_NODE));
@@ -26,15 +29,42 @@ extern BTREE_NODE *btreenode_clone(BTREE_NODE *node)
     if (node != NULL)
     {
         btreenode = btreenode_new(node->value);
+        btreenode_clone_recursive(node, btreenode);
     }
     
     return btreenode;
 }
 
+static void btreenode_clone_recursive(BTREE_NODE *node1, BTREE_NODE *node2)
+{
+    if (node1->left_child != NULL)
+    {
+        node2->left_child = btreenode_clone(node1->left_child);
+        btreenode_clone_recursive(node1->left_child, node2->left_child);
+    }
+    
+    if (node1->right_child != NULL)
+    {
+        node2->right_child = btreenode_clone(node1->right_child);
+        btreenode_clone_recursive(node1->right_child, node2->right_child);
+    }
+}
+
 extern bool btreenode_equals(BTREE_NODE *node1, BTREE_NODE *node2)
 {
-    return node1 != NULL && node2 != NULL
-        && node1->value == node2->value;
+    if (node1 == NULL && node2 == NULL)
+    {
+        return true;
+    }
+    
+    if (node1 != NULL && node2 != NULL)
+    {
+        return node1->value == node2->value
+        && btreenode_equals(node1->left_child, node2->left_child)
+        && btreenode_equals(node1->right_child, node2->right_child);
+    }
+    
+    return false;
 }
 
 extern void btreenode_destroy(BTREE_NODE **node,
@@ -42,10 +72,14 @@ extern void btreenode_destroy(BTREE_NODE **node,
 {
     if (node != NULL && *node != NULL)
     {
+        btreenode_destroy(&((*node)->left_child), destroy_data);
+        btreenode_destroy(&((*node)->right_child), destroy_data);
+        
         if (destroy_data != NULL)
         {
             destroy_data(&(*node)->value);
         }
+        
         FREE_NULL(*node);
     }
 }
@@ -123,6 +157,33 @@ extern void btreenode_print(BTREE_NODE *node, PRINT_DATA_FCT print_data)
 {
     if (node != NULL && print_data != NULL)
     {
+        btreenode_print_preoder(node, print_data, 0);
+    }
+}
+
+static void btreenode_print_preoder(BTREE_NODE *node, PRINT_DATA_FCT print_data, unsigned int depth)
+{
+    int i;
+    
+    for (i = 0; i < depth; i++)
+    {
+        printf("\t");
+    }
+    
+    if (node->value != NULL)
+    {
+        printf("|-- ");
         print_data(node->value);
+        printf("\n");
+    }
+    
+    if (node->left_child != NULL)
+    {
+        btreenode_print_preoder(node->left_child, print_data, depth + 1);
+    }
+    
+    if (node->right_child != NULL)
+    {
+        btreenode_print_preoder(node->right_child, print_data, depth + 1);
     }
 }
