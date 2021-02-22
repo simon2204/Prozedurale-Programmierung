@@ -23,11 +23,7 @@
  * Typdefinitionen
  * ======================================================================== */
 
-typedef struct _BTREE_NODE {
-    void *value;
-    struct _BTREE_NODE *left_child;
-    struct _BTREE_NODE *right_child;
-} BTREE_NODE;
+typedef struct _BTREE_NODE BTREE_NODE;
 
 /**
  * Typdefinition für Funktionen, mit denen Knoteninhalte gelöscht werden können.

@@ -10,6 +10,12 @@
 #include "binary_tree_common.h"
 #include "btreenode.h"
 
+struct _BTREE {
+    BTREE_NODE *root;
+    DESTROY_DATA_FCT destroy_data; /* Fkt. zum Löschen der enthaltenen Daten */
+    PRINT_DATA_FCT print_data;     /* Fkt. zum Anzeigen der enthaltenen Daten */
+};
+
 extern BTREE *btree_new(void *data,
                         DESTROY_DATA_FCT destroy_data,
                         PRINT_DATA_FCT print_data)
@@ -28,9 +34,12 @@ extern BTREE *btree_clone(BTREE *tree)
     
     if (tree != NULL && tree->root != NULL)
     {
-        clone = btree_new(tree->root->value, tree->destroy_data, tree->print_data);
-        clone->root->left_child = btreenode_clone(tree->root->left_child);
-        clone->root->right_child = btreenode_clone(tree->root->right_child);
+        void *data = btreenode_get_data(tree->root);
+        clone = btree_new(data, tree->destroy_data, tree->print_data);
+        BTREE_NODE *left_clone = btreenode_clone(btreenode_get_left(tree->root));
+        BTREE_NODE *right_clone = btreenode_clone(btreenode_get_right(tree->root));
+        btreenode_set_left(clone->root, left_clone);
+        btreenode_set_right(clone->root, right_clone);
     }
     
     return clone;
@@ -80,8 +89,8 @@ extern BTREE *btree_merge(BTREE *left, BTREE *right, void *data)
     if (left != NULL && right != NULL)
     {
         merge = btree_new(data, left->destroy_data, left->print_data);
-        merge->root->left_child = left->root;
-        merge->root->right_child = right->root;
+        btreenode_set_left(merge->root, left->root);
+        btreenode_set_right(merge->root, right->root);
         free(left);
         free(right);
     }

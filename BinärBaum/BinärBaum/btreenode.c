@@ -9,6 +9,12 @@
 #include "btreenode.h"
 #include "binary_tree_common.h"
 
+struct _BTREE_NODE {
+    void *value;
+    struct _BTREE_NODE *left_child;
+    struct _BTREE_NODE *right_child;
+};
+
 static void btreenode_clone_recursive(BTREE_NODE *node1, BTREE_NODE *node2);
 static void btreenode_print_preoder(BTREE_NODE *node, PRINT_DATA_FCT print_data, unsigned int depth);
 
