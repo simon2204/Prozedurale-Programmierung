@@ -60,4 +60,8 @@ extern BIT read_bit(void);
 /// @param c - Das Bit, welches an die nächste freie Position des Ausgabepuffers geschrieben werden soll.
 extern void write_bit(BIT c);
 
+extern unsigned int read_int(void);
+
+extern void write_int(unsigned int i);
+
 #endif /* io_h */

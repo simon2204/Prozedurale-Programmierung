@@ -60,6 +60,11 @@ static FILE *input_stream;
 /// Die komprimierte oder dekomprimierte Datei
 static FILE *output_stream;
 
+union UINT32 {
+    unsigned char bytes[4];
+    unsigned int value;
+};
+
 static void init_in(void)
 {
     lese_segment = 0;
@@ -196,6 +201,34 @@ extern void write_bit(BIT c)
     {
         // wird der Inhalt in den `output_stream` geschrieben
         write_outfile();
+    }
+}
+
+extern unsigned int read_int(void)
+{
+    int i;
+    
+    union UINT32 uint32;
+    
+    for (i = 0; i < 4; i++)
+    {
+        uint32.bytes[i] = read_char();
+    }
+    
+    return uint32.value;
+}
+
+extern void write_int(unsigned int i)
+{
+    int j;
+    
+    union UINT32 uint32;
+    
+    uint32.value = i;
+    
+    for (j = 0; j < 4; j++)
+    {
+        write_char(uint32.bytes[j]);
     }
 }
 

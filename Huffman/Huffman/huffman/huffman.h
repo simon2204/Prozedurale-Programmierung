@@ -14,10 +14,10 @@
 
 
 /// Testet die Funktionen 'read_char' und 'write_bit'.
-extern void test_rd_chars_wr_bits(char in_filename[], char out_filename[]);
+extern void compress(char in_filename[], char out_filename[]);
 
 /// Testet die Funktionen 'read_bit' und 'write_char'.
-extern void test_rd_bits_wr_chars(char in_filename[], char out_filename[]);
+extern void decompress(char in_filename[], char out_filename[]);
 
 #endif /* huffman_h */
 

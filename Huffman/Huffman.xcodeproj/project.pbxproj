@@ -11,6 +11,11 @@
 		F44B0222257977EF00B44DC0 /* huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = F44B0221257977EF00B44DC0 /* huffman.c */; };
 		F44B022B25797AF600B44DC0 /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = F44B022A25797AF600B44DC0 /* io.c */; };
 		F4523E7125AA548200723C58 /* argument_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = F4523E7025AA548200723C58 /* argument_parser.c */; };
+		F4FC6BFE25FE37060011F765 /* btreenode.c in Sources */ = {isa = PBXBuildFile; fileRef = F4FC6BF625FE37060011F765 /* btreenode.c */; };
+		F4FC6C0025FE37060011F765 /* btree.c in Sources */ = {isa = PBXBuildFile; fileRef = F4FC6BFA25FE37060011F765 /* btree.c */; };
+		F4FC6C0125FE37060011F765 /* frequency.c in Sources */ = {isa = PBXBuildFile; fileRef = F4FC6BFD25FE37060011F765 /* frequency.c */; };
+		F4FC6C0525FE4C480011F765 /* binary_heap.c in Sources */ = {isa = PBXBuildFile; fileRef = F4FC6C0325FE4C480011F765 /* binary_heap.c */; };
+		F4FC6C0925FFB96E0011F765 /* dyn_string.c in Sources */ = {isa = PBXBuildFile; fileRef = F4FC6C0825FFB96E0011F765 /* dyn_string.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +40,17 @@
 		F44B022A25797AF600B44DC0 /* io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = io.c; sourceTree = "<group>"; };
 		F4523E6F25AA548200723C58 /* argument_parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = argument_parser.h; sourceTree = "<group>"; };
 		F4523E7025AA548200723C58 /* argument_parser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = argument_parser.c; sourceTree = "<group>"; };
+		F4FC6BF625FE37060011F765 /* btreenode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = btreenode.c; path = "../../../BinärBaum/BinärBaum/btreenode.c"; sourceTree = "<group>"; };
+		F4FC6BF725FE37060011F765 /* btree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = btree.h; path = "../../../BinärBaum/BinärBaum/btree.h"; sourceTree = "<group>"; };
+		F4FC6BF825FE37060011F765 /* binary_tree_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = binary_tree_common.h; path = "../../../BinärBaum/BinärBaum/binary_tree_common.h"; sourceTree = "<group>"; };
+		F4FC6BFA25FE37060011F765 /* btree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = btree.c; path = "../../../BinärBaum/BinärBaum/btree.c"; sourceTree = "<group>"; };
+		F4FC6BFB25FE37060011F765 /* btreenode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = btreenode.h; path = "../../../BinärBaum/BinärBaum/btreenode.h"; sourceTree = "<group>"; };
+		F4FC6BFC25FE37060011F765 /* frequency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frequency.h; sourceTree = "<group>"; };
+		F4FC6BFD25FE37060011F765 /* frequency.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = frequency.c; sourceTree = "<group>"; };
+		F4FC6C0325FE4C480011F765 /* binary_heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = binary_heap.c; sourceTree = "<group>"; };
+		F4FC6C0425FE4C480011F765 /* binary_heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary_heap.h; sourceTree = "<group>"; };
+		F4FC6C0725FFB96E0011F765 /* dyn_string.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dyn_string.h; sourceTree = "<group>"; };
+		F4FC6C0825FFB96E0011F765 /* dyn_string.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dyn_string.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,16 +83,83 @@
 		F44B02172579777A00B44DC0 /* Huffman */ = {
 			isa = PBXGroup;
 			children = (
-				F44B022425797AE700B44DC0 /* huffman_common.h */,
 				F44B02182579777A00B44DC0 /* main.c */,
+				F4FC6C0225FE4BF30011F765 /* heap */,
+				F4FC6BF525FE360C0011F765 /* btree */,
+				F4FC6C0625FE4C6C0011F765 /* frequency */,
+				F4FC6C0A25FFE6100011F765 /* huffman */,
+				F4FC6C0B25FFE6240011F765 /* io */,
+				F4FC6C0C25FFE6340011F765 /* argument_parser */,
+				F4FC6C0D25FFE64C0011F765 /* dyn_string */,
+			);
+			path = Huffman;
+			sourceTree = "<group>";
+		};
+		F4FC6BF525FE360C0011F765 /* btree */ = {
+			isa = PBXGroup;
+			children = (
+				F4FC6BF825FE37060011F765 /* binary_tree_common.h */,
+				F4FC6BFA25FE37060011F765 /* btree.c */,
+				F4FC6BF725FE37060011F765 /* btree.h */,
+				F4FC6BF625FE37060011F765 /* btreenode.c */,
+				F4FC6BFB25FE37060011F765 /* btreenode.h */,
+			);
+			path = btree;
+			sourceTree = "<group>";
+		};
+		F4FC6C0225FE4BF30011F765 /* heap */ = {
+			isa = PBXGroup;
+			children = (
+				F4FC6C0325FE4C480011F765 /* binary_heap.c */,
+				F4FC6C0425FE4C480011F765 /* binary_heap.h */,
+			);
+			path = heap;
+			sourceTree = "<group>";
+		};
+		F4FC6C0625FE4C6C0011F765 /* frequency */ = {
+			isa = PBXGroup;
+			children = (
+				F4FC6BFD25FE37060011F765 /* frequency.c */,
+				F4FC6BFC25FE37060011F765 /* frequency.h */,
+			);
+			path = frequency;
+			sourceTree = "<group>";
+		};
+		F4FC6C0A25FFE6100011F765 /* huffman */ = {
+			isa = PBXGroup;
+			children = (
+				F44B022425797AE700B44DC0 /* huffman_common.h */,
 				F44B0220257977EF00B44DC0 /* huffman.h */,
 				F44B0221257977EF00B44DC0 /* huffman.c */,
+			);
+			path = huffman;
+			sourceTree = "<group>";
+		};
+		F4FC6C0B25FFE6240011F765 /* io */ = {
+			isa = PBXGroup;
+			children = (
 				F44B022925797AF600B44DC0 /* io.h */,
 				F44B022A25797AF600B44DC0 /* io.c */,
+			);
+			path = io;
+			sourceTree = "<group>";
+		};
+		F4FC6C0C25FFE6340011F765 /* argument_parser */ = {
+			isa = PBXGroup;
+			children = (
 				F4523E6F25AA548200723C58 /* argument_parser.h */,
 				F4523E7025AA548200723C58 /* argument_parser.c */,
 			);
-			path = Huffman;
+			path = argument_parser;
+			sourceTree = "<group>";
+		};
+		F4FC6C0D25FFE64C0011F765 /* dyn_string */ = {
+			isa = PBXGroup;
+			children = (
+				F4FC6C0725FFB96E0011F765 /* dyn_string.h */,
+				F4FC6C0825FFB96E0011F765 /* dyn_string.c */,
+			);
+			path = dyn_string;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,10 +218,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4FC6C0525FE4C480011F765 /* binary_heap.c in Sources */,
 				F44B022B25797AF600B44DC0 /* io.c in Sources */,
 				F4523E7125AA548200723C58 /* argument_parser.c in Sources */,
 				F44B02192579777A00B44DC0 /* main.c in Sources */,
 				F44B0222257977EF00B44DC0 /* huffman.c in Sources */,
+				F4FC6C0925FFB96E0011F765 /* dyn_string.c in Sources */,
+				F4FC6C0025FE37060011F765 /* btree.c in Sources */,
+				F4FC6C0125FE37060011F765 /* frequency.c in Sources */,
+				F4FC6BFE25FE37060011F765 /* btreenode.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
