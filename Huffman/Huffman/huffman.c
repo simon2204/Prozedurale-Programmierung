@@ -12,37 +12,37 @@
 #include "btreenode.h"
 #include "dyn_string.h"
 
+#define letter_count 256
+
 static int btree_get_frequency_count(BTREE *btree);
 
 static int btree_cmp(BTREE *btree1, BTREE *btree2);
 
-static void create_huffman_table(unsigned char *bits[], BTREE *btree);
+static void create_huffman_table(unsigned char *huffman_table[], BTREE *btree);
 
-static void create_huffman_table_recusive(BTREE_NODE *node, DYN_STRING *code, unsigned char *bits[]);
+static void create_huffman_table_recusive(BTREE_NODE *node, DYN_STRING *code, unsigned char *huffman_table[letter_count]);
 
-static void write_frequency_table(struct FREQUENCY *table[256]);
+static void write_frequency_table(struct FREQUENCY *frequency_table[letter_count]);
 
-static void create_frequency_table(struct FREQUENCY *frequency_table[256], unsigned int *frequency_count);
+static void create_frequency_table(struct FREQUENCY *frequency_table[letter_count], unsigned int *frequency_count);
 
-static void create_frequency_table_from_data(struct FREQUENCY *frequency_table[256]);
+static void create_frequency_table_from_data(struct FREQUENCY *frequency_table[letter_count]);
 
-static void create_heap(struct FREQUENCY *frequency_table[256]);
+static void create_heap(struct FREQUENCY *frequency_table[letter_count]);
 
 static BTREE *create_huffman_tree(void);
 
-static void write_compressed_text(unsigned char *huffman_table[256]);
+static void write_compressed_text(unsigned char *huffman_table[letter_count]);
+
+static void write_decompressed_text(BTREE *huffman_tree, unsigned int null_byte_count);
+
 
 extern void compress(char in_filename[], char out_filename[])
 {
-    clock_t prg_start;
-    clock_t prg_end;
-
-    prg_start = clock();
-
     open_infile(in_filename);
     open_outfile(out_filename);
 
-    struct FREQUENCY *frequency_table[256] = {NULL};
+    struct FREQUENCY *frequency_table[letter_count] = {NULL};
     unsigned int frequency_count;
     
     struct FREQUENCY *end_of_file = frequency_create('\0', 1);
@@ -65,7 +65,7 @@ extern void compress(char in_filename[], char out_filename[])
     
     BTREE *huffman_tree = create_huffman_tree();
 
-    unsigned char *huffman_table[256] = {NULL};
+    unsigned char *huffman_table[letter_count] = {NULL};
     
     create_huffman_table(huffman_table, huffman_tree);
     
@@ -76,27 +76,14 @@ extern void compress(char in_filename[], char out_filename[])
     
     heap_destroy();
     btree_destroy(&huffman_tree, true);
-    
-    prg_end = clock();
-    
-    if (wants_verbose_info())
-    {
-        printf(" - Die Laufzeit betrug %.2f Sekunden\n",
-        (float) (prg_end - prg_start) / CLOCKS_PER_SEC);
-    }
 }
 
 extern void decompress(char in_filename[], char out_filename[])
 {
-    clock_t prg_start;
-    clock_t prg_end;
-    
-    prg_start = clock();
-    
     open_infile(in_filename);
     open_outfile(out_filename);
     
-    struct FREQUENCY *frequency_table[256] = {NULL};
+    struct FREQUENCY *frequency_table[letter_count] = {NULL};
     
     create_frequency_table_from_data(frequency_table);
     
@@ -104,49 +91,14 @@ extern void decompress(char in_filename[], char out_filename[])
     
     BTREE *huffman_tree = create_huffman_tree();
     
-    BTREE_NODE *current_node = btree_get_root(huffman_tree);
+    unsigned int null_byte_count = frequency_get_count(frequency_table['\0']);
     
-    while (has_next_bit())
-    {
-        if (btreenode_is_leaf(current_node))
-        {
-            struct FREQUENCY *frequency = btreenode_get_data(current_node);
-            
-            unsigned char current_char = frequency_get_char(frequency);
-            
-            if (current_char == '\0')
-            {
-                break;
-            }
-            else
-            {
-                write_char(current_char);
-                current_node = btree_get_root(huffman_tree);
-            }
-        }
-        
-        if (read_bit() == ZERO)
-        {
-            current_node = btreenode_get_left(current_node);
-        }
-        else
-        {
-            current_node = btreenode_get_right(current_node);
-        }
-    }
+    write_decompressed_text(huffman_tree, null_byte_count);
     
     close_infile();
     close_outfile();
     
     btree_destroy(&huffman_tree, true);
-    
-    prg_end = clock();
-    
-    if (wants_verbose_info())
-    {
-        printf(" - Die Laufzeit betrug %.2f Sekunden\n",
-        (float) (prg_end - prg_start) / CLOCKS_PER_SEC);
-    }
 }
 
 static int btree_get_frequency_count(BTREE *btree)
@@ -190,7 +142,7 @@ static void create_huffman_table(unsigned char *huffman_table[], BTREE *huffman_
     }
 }
 
-static void create_huffman_table_recusive(BTREE_NODE *node, DYN_STRING *code, unsigned char *bits[])
+static void create_huffman_table_recusive(BTREE_NODE *node, DYN_STRING *code, unsigned char *huffman_table[letter_count])
 {
     BTREE_NODE *left = btreenode_get_left(node);
     BTREE_NODE *right = btreenode_get_right(node);
@@ -198,7 +150,7 @@ static void create_huffman_table_recusive(BTREE_NODE *node, DYN_STRING *code, un
     if (btreenode_is_leaf(node))
     {
         unsigned char character = btreenode_get_frequency_word(node);
-        bits[character] = (unsigned char*) dynstring_get_text(code);
+        huffman_table[character] = (unsigned char*) dynstring_get_text(code);
         dynstring_destroy(&code, false);
         return;
     }
@@ -207,27 +159,27 @@ static void create_huffman_table_recusive(BTREE_NODE *node, DYN_STRING *code, un
     {
         DYN_STRING *code_copy = dynstring_copy(code);
         dynstring_append_character('0', code_copy);
-        create_huffman_table_recusive(left, code_copy, bits);
+        create_huffman_table_recusive(left, code_copy, huffman_table);
     }
     
     if (right != NULL)
     {
         DYN_STRING *code_copy = dynstring_copy(code);
         dynstring_append_character('1', code_copy);
-        create_huffman_table_recusive(right, code_copy, bits);
+        create_huffman_table_recusive(right, code_copy, huffman_table);
     }
     
     dynstring_destroy(&code, true);
 }
 
-static void write_frequency_table(struct FREQUENCY *table[256])
+static void write_frequency_table(struct FREQUENCY *frequency_table[letter_count])
 {
     int i;
     struct FREQUENCY *frequency;
     
-    for (i = 0; i < 256; i++)
+    for (i = 0; i < letter_count; i++)
     {
-        frequency = table[i];
+        frequency = frequency_table[i];
         
         if (frequency != NULL)
         {
@@ -237,7 +189,7 @@ static void write_frequency_table(struct FREQUENCY *table[256])
     }
 }
 
-static void create_frequency_table(struct FREQUENCY *frequency_table[256], unsigned int *frequency_count)
+static void create_frequency_table(struct FREQUENCY *frequency_table[letter_count], unsigned int *frequency_count)
 {
     unsigned int count = 0;
     
@@ -259,7 +211,7 @@ static void create_frequency_table(struct FREQUENCY *frequency_table[256], unsig
     *frequency_count = count;
 }
 
-static void create_frequency_table_from_data(struct FREQUENCY *frequency_table[256])
+static void create_frequency_table_from_data(struct FREQUENCY *frequency_table[letter_count])
 {
     int i;
     
@@ -278,14 +230,14 @@ static void create_frequency_table_from_data(struct FREQUENCY *frequency_table[2
     }
 }
 
-static void create_heap(struct FREQUENCY *frequency_table[256])
+static void create_heap(struct FREQUENCY *frequency_table[letter_count])
 {
     int i;
     BTREE *btree;
     
     heap_init((HEAP_ELEM_COMP) btree_cmp, (HEAP_ELEM_PRINT) frequency_print);
 
-    for (i = 0; i < 256; i++)
+    for (i = 0; i < letter_count; i++)
     {
         if (frequency_table[i] != NULL)
         {
@@ -326,33 +278,8 @@ static BTREE *create_huffman_tree(void)
     return huffman_tree;
 }
 
-static void write_compressed_text(unsigned char *huffman_table[256])
+static void write_code(unsigned char *code)
 {
-    unsigned char character;
-    unsigned char *code;
-    
-    while (has_next_char())
-    {
-        character = read_char();
-        code = huffman_table[character];
-
-        while (*code != '\0')
-        {
-            if (*code == '0')
-            {
-                write_bit(ZERO);
-            }
-            else
-            {
-                write_bit(ONE);
-            }
-            code++;
-        }
-    }
-    
-    character = '\0';
-    code = huffman_table[character];
-    
     while (*code != '\0')
     {
         if (*code == '0')
@@ -364,5 +291,60 @@ static void write_compressed_text(unsigned char *huffman_table[256])
             write_bit(ONE);
         }
         code++;
+    }
+}
+
+static void write_compressed_text(unsigned char *huffman_table[letter_count])
+{
+    unsigned char character;
+    
+    while (has_next_char())
+    {
+        character = read_char();
+        write_code(huffman_table[character]);
+    }
+    
+    write_code(huffman_table['\0']);
+}
+
+static void write_decompressed_text(BTREE *huffman_tree, unsigned int null_byte_count)
+{
+    BTREE_NODE *current_node = btree_get_root(huffman_tree);
+    
+    struct FREQUENCY *frequency;
+    
+    unsigned char current_char;
+    
+    while (has_next_bit())
+    {
+        if (read_bit() == ZERO)
+        {
+            current_node = btreenode_get_left(current_node);
+        }
+        else
+        {
+            current_node = btreenode_get_right(current_node);
+        }
+        
+        if (btreenode_is_leaf(current_node))
+        {
+            frequency = btreenode_get_data(current_node);
+            current_char = frequency_get_char(frequency);
+            
+            if (current_char == '\0')
+            {
+                null_byte_count--;
+            }
+            
+            if (null_byte_count > 0)
+            {
+                write_char(current_char);
+                current_node = btree_get_root(huffman_tree);
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 }

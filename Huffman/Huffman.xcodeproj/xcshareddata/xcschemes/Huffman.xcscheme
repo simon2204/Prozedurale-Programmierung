@@ -52,7 +52,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-c /Users/Simon/Desktop/test.txt -o /Users/Simon/Desktop/testOut.txt"
+            argument = "-c /Users/Simon/GitHub/Prozedurale-Programmierung/Huffman/testfiles/09_LordOfTheRings.txt -o /Users/Simon/Desktop/LordOut.txt"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-c /Users/Simon/Desktop/09_LordOfTheRings.txt -o /Users/Simon/Desktop/LordOut.txt"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -60,7 +64,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-d /Users/Simon/Desktop/testOut.txt -o /Users/Simon/Desktop/testdecompressed.txt"
+            argument = "-d /Users/Simon/Desktop/LordOut.txt -o /Users/Simon/Desktop/LordInOut.txt"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

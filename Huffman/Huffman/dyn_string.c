@@ -22,7 +22,7 @@ DYN_STRING *dynstring_create(void)
     DYN_STRING *dyn_string = malloc(sizeof(struct _DYN_STRING));
     dyn_string->text = malloc(sizeof(char));
     *(dyn_string->text) = END_OF_STRING;
-    dyn_string->size = 0;
+    dyn_string->size = 1;
     return dyn_string;
 }
 
@@ -44,10 +44,10 @@ void dynstring_append_character(char character, DYN_STRING *dynstring)
     if (dynstring != NULL)
     {
         int new_size = dynstring->size + 1;
-        dynstring->text = realloc(dynstring->text, new_size);
-        dynstring->text[dynstring->size] = character;
-        dynstring->size = new_size;
+        dynstring->text = realloc(dynstring->text, new_size * sizeof(char));
+        dynstring->text[dynstring->size - 1] = character;
         dynstring->text[dynstring->size] = END_OF_STRING;
+        dynstring->size = new_size;
     }
 }
 
@@ -58,9 +58,8 @@ DYN_STRING *dynstring_copy(DYN_STRING *dynstring)
     if (dynstring != NULL)
     {
         dynstring_copy = malloc(sizeof(struct _DYN_STRING));
-        int text_size = dynstring->size;
-        dynstring_copy->text = malloc(text_size * sizeof(char));
-        dynstring_copy->size = text_size;
+        dynstring_copy->text = malloc(dynstring->size * sizeof(char));
+        dynstring_copy->size = dynstring->size;
         strcpy(dynstring_copy->text, dynstring->text);
     }
     
