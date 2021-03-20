@@ -13,10 +13,14 @@
 #include "io.h"
 
 
-/// Testet die Funktionen 'read_char' und 'write_bit'.
+/// Komprimiert den Text der über den Dateinamen in `in_filename` angegeben wird und schreibt diesen in die Ausgabedatei `out_filename`.
+/// @param in_filename Der Name der zu komprimierenden Datei.
+/// @param out_filename Der Name der kompirierten Datei.
 extern void compress(char in_filename[], char out_filename[]);
 
-/// Testet die Funktionen 'read_bit' und 'write_char'.
+/// Dekomprimiert den Text der über den Dateinamen in `in_filename` angegeben wird und schreibt diesen in die Ausgabedatei `out_filename`.
+/// @param in_filename Der Name der zu dekomprimierenden Datei.
+/// @param out_filename Der Name der dekompirierten Datei.
 extern void decompress(char in_filename[], char out_filename[]);
 
 #endif /* huffman_h */

@@ -14,26 +14,58 @@
 
 #define letter_count 256
 
+/// Liest aus der Wurzel eines `BTREE`s, welche Werte des Typs `FREQUENCY` halten, den "frequency count" aus.
+/// @param btree Der zu lesende `BTREE`.
+/// @return Liefert den Wert, den die Funktion `frequency_get_count` zurück gibt.
 static int btree_get_frequency_count(BTREE *btree);
 
+/// Vergleicht zwei `BTREE`s miteinander, auf Basis der im Root enthaltenen Frequencies.
+/// @param btree1 Der zu vergleichende `BTREE`.
+/// @param btree2 Der zu vergleichende `BTREE`.
+/// @return Liefert '-1', wenn btree1 kleiner ist als btree2. Wenn beide gleich groß sind '0' und wenn btree2 größer ist als btree1, dann '1'.
 static int btree_cmp(BTREE *btree1, BTREE *btree2);
 
-static void create_huffman_table(unsigned char *huffman_table[], BTREE *btree);
+/// Erzeugt mit Hilfe der Funktion `create_huffman_table_recusive` aus einem `huffman_tree` den `huffman_table`.
+/// Jedes der 256 Felder steht für einen bestimmten Wert in der Ascii-Tabelle und jedes verwendete Feld beinhaltet den Code,
+/// der verwendet wird, um einen Text zu komprimieren.
+/// @param huffman_table Die Ausgabe des huffman tables.
+/// @param huffman_tree Der Baum, ausdem `huffman_table` erstellt wird.
+static void create_huffman_table(unsigned char *huffman_table[letter_count], BTREE *huffman_tree);
 
+/// Erzeugt durch rekursive Aufrufe den huffman table.
+/// @param node Der als nächstes zu lesende Baumknoten.
+/// @param code Der erstellte Huffmancode.
+/// @param huffman_table Ausgabe des Huffman Tabelle.
 static void create_huffman_table_recusive(BTREE_NODE *node, DYN_STRING *code, unsigned char *huffman_table[letter_count]);
 
-static void write_frequency_table(struct FREQUENCY *frequency_table[letter_count]);
-
+/// Erzeugt die Tabelle, die die Häufigkeiten der jeweiligen im Text vorkommenden zeichen angibt.
+/// @param frequency_table Gibt eine Häufigkeitstabelle zurück.
+/// @param frequency_count Gibt die Anzahl der "besetzten" Plätze in der Häufigkeitstabelle an.
 static void create_frequency_table(struct FREQUENCY *frequency_table[letter_count], unsigned int *frequency_count);
 
+/// Schreibt `frequency_table` in die Ausgabedatei.
+/// @param frequency_table Die Tabelle, die in die Ausgabedatei geschrieben werden soll.
+static void write_frequency_table(struct FREQUENCY *frequency_table[letter_count]);
+
+/// Erzeugt eine Häufigkeitstabelle aus einer bereits komprimierten Datei.
+/// @param frequency_table Ausgabe der Häufigkeitstabelle.
 static void create_frequency_table_from_data(struct FREQUENCY *frequency_table[letter_count]);
 
+/// Legt die Häufigkeiten in einen Heap ab.
+/// @param frequency_table Tabelle, aus der die Häufigkeiten gelesen werden.
 static void create_heap(struct FREQUENCY *frequency_table[letter_count]);
 
+/// Erzeugt aus dem erstellten Heap den Huffman-Tree.
+/// @return Liefert den erzeugten Huffman-Tree, der genutzt wird, um zu dekomprimieren.
 static BTREE *create_huffman_tree(void);
 
+/// Schreibt den komprimierten Text mit Hilfe der Huffman Tabelle in die Ausgabedatei.
+/// @param huffman_table Die zum Komprimieren verwendet wird.
 static void write_compressed_text(unsigned char *huffman_table[letter_count]);
 
+/// Schreibt den dekomprimierten Text mit Hilfe des Huffman-Baumes in die Ausgabedatei.
+/// @param huffman_tree Der zum Dekomprimieren verwendet wird.
+/// @param null_byte_count
 static void write_decompressed_text(BTREE *huffman_tree, unsigned int null_byte_count);
 
 
@@ -133,7 +165,7 @@ static int btree_cmp(BTREE *btree1, BTREE *btree2)
     return frequency_compare(data1, data2);
 }
 
-static void create_huffman_table(unsigned char *huffman_table[], BTREE *huffman_tree)
+static void create_huffman_table(unsigned char *huffman_table[letter_count], BTREE *huffman_tree)
 {
     if (huffman_tree != NULL)
     {
