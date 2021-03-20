@@ -77,5 +77,3 @@ char *dynstring_get_text(DYN_STRING *dynstring)
     
     return text;
 }
-
-

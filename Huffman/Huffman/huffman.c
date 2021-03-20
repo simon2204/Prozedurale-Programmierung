@@ -68,6 +68,10 @@ static void write_compressed_text(unsigned char *huffman_table[letter_count]);
 /// @param null_byte_count Anzahl der '\0' characters im Text.
 static void write_decompressed_text(BTREE *huffman_tree, unsigned int null_byte_count);
 
+/// Gibt den Speicher des Huffman Table frei.
+/// @param huffman_table Der Huffman Table, dessen Elemente freigegeben wird.
+static void free_huffman_table(unsigned char *huffman_table[letter_count]);
+
 
 extern void compress(char in_filename[], char out_filename[])
 {
@@ -108,6 +112,8 @@ extern void compress(char in_filename[], char out_filename[])
     
     heap_destroy();
     btree_destroy(&huffman_tree, true);
+    
+    free_huffman_table(huffman_table);
 }
 
 extern void decompress(char in_filename[], char out_filename[])
@@ -377,6 +383,19 @@ static void write_decompressed_text(BTREE *huffman_tree, unsigned int null_byte_
             {
                 break;
             }
+        }
+    }
+}
+
+static void free_huffman_table(unsigned char *huffman_table[letter_count])
+{
+    for (int i = 0; i < letter_count; i++)
+    {
+        unsigned char *code = huffman_table[i];
+        if (code != NULL)
+        {
+            free(code);
+            huffman_table[i] = NULL;
         }
     }
 }

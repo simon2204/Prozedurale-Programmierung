@@ -27,7 +27,7 @@ typedef void (*HEAP_ELEM_PRINT) (void* element);
 /// Initialisiert den Heap.
 extern void heap_init(HEAP_ELEM_COMP comp, HEAP_ELEM_PRINT print);
 
-/// Löscht den Heap, d.h., sie gibt den Speicher frei.
+/// Löscht den Heap, d.h., er gibt den Speicher frei.
 extern void heap_destroy(void);
 
 /// Fügt ein neues Element in den Heap ein und sorgt dafür, dass die Heap-Eigenschaft aufrechterhalten bleibt.
