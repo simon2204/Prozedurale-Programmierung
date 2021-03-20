@@ -65,7 +65,7 @@ static void write_compressed_text(unsigned char *huffman_table[letter_count]);
 
 /// Schreibt den dekomprimierten Text mit Hilfe des Huffman-Baumes in die Ausgabedatei.
 /// @param huffman_tree Der zum Dekomprimieren verwendet wird.
-/// @param null_byte_count
+/// @param null_byte_count Anzahl der '\0' characters im Text.
 static void write_decompressed_text(BTREE *huffman_tree, unsigned int null_byte_count);
 
 
